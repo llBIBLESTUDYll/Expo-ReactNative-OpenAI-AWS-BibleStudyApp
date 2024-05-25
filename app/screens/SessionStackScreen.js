@@ -14,8 +14,8 @@ const SessionStackScreen = () => {
   return (
     <SessionStack.Navigator initialRouteName="Session">
       <SessionStack.Screen name="Session" component={SessionScreen} options={{ headerShown: false }} />
-      <SessionStack.Screen name="ActiveSession" component={ActiveSessionScreen} options={{title: "Active Bible Study"}}/>
-      <SessionStack.Screen name="CreateSession" component={CreateSessionScreen} options={{title: "New Bible Study"}} />
+      <SessionStack.Screen name="ActiveSession" component={ActiveSessionScreen} options={{ headerShown: false }}/>
+      <SessionStack.Screen name="CreateSession" component={CreateSessionScreen} options={{ headerShown: false }} />
       <SessionStack.Screen name="SessionDetails" component={SessionDetailsScreen} />
     </SessionStack.Navigator>
   );

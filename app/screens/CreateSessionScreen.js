@@ -6,12 +6,18 @@ import {
     TouchableOpacity,
     TextInput,
     Alert,
-    ActivityIndicator
+    ActivityIndicator,
+    Image
 } from "react-native";
+import { styled, withExpoSnack } from 'nativewind';
+import { useNavigation } from '@react-navigation/native';
+import { Ionicons } from '@expo/vector-icons';
 import axios from "axios";
+import { styles } from '../styles/CreateStyle'
 import Constants from 'expo-constants';
 // This screen provides functionality for users to create a new Bible study session
-const CreateSessionScreen = ({ navigation }) => {
+const CreateSessionScreen = () => {
+    const navigation = useNavigation();
 
     // State hooks to manage form inputs and other variables
     const [groupType, setGroupType] = useState("");
@@ -127,108 +133,87 @@ const CreateSessionScreen = ({ navigation }) => {
             }
         };
     }
-        return (
 
-            <View style={styles.container}>
-                {error && <Text style={styles.errorMessage}>{error}</Text>}
+    const goToBack = () => {
+        navigation.goBack();
+    }
+    return (
+        <View className={styles.container}>
+            <View className={styles.header}>
+                <Ionicons name="arrow-back-sharp" size={30} color="black" onClick={() => goToBack()} />
+                <Text className={styles.title}>Create Session</Text>
+                <Image className={styles.avatar} source={require('../../design/avatar.png')}></Image>
+            </View>
+            <Text className={styles.postar}>Let's Create!</Text>
+            {error && <Text className={styles.errorMessage}>{error}</Text>}
 
-                {/* Form fields to create a new Bible study session */}
-                <Text style={styles.inputLabel}>Group Type</Text>
+            {/* Form fields to create a new Bible study session */}
+            <View className={styles.inputGroup}>
+                <Text className={styles.inputLabel}>Group Type</Text>
                 <TextInput
-                    style={styles.input}
+                    className={styles.input}
                     onChangeText={setGroupType}
                     value={groupType}
                     placeholder="Enter Group Type (eg. Family)"
                     placeholderTextColor="grey"
                 />
+            </View>
 
-                <Text style={styles.inputLabel}>Number of Questions</Text>
+            <View className={styles.inputGroup}>
+                <Text className={styles.inputLabel}>Number of Questions</Text>
                 <TextInput
                     keyboardType="numeric"
-                    style={styles.input}
+                    className={styles.input}
                     onChangeText={setNumberQuestions}
                     value={numberQuestions}
                     placeholder="Enter Desired Number of Questions (eg. 3)"
                     placeholderTextColor="grey"
                 />
+            </View>
 
-                <Text style={styles.inputLabel}>Number of Verses per Question</Text>
+            <View className={styles.inputGroup}>
+                <Text className={styles.inputLabel}>Number of Verses per Question</Text>
                 <TextInput
                     keyboardType="numeric"
-                    style={styles.input}
+                    className={styles.input}
                     onChangeText={setNumberVerses}
                     value={numberVerses}
                     placeholder="Enter Desired Number of Verses per Question (eg. 5)"
                     placeholderTextColor="grey"
                 />
+            </View>
 
-                <Text style={styles.inputLabel}>Focus Topic (Optional)</Text>
+            <View className={styles.inputGroup}>
+                <Text className={styles.inputLabel}>Focus Topic (Optional)</Text>
                 <TextInput
-                    multiline
-                    numberOfLines={2}
-                    style={styles.input}
+                    className={styles.input}
                     onChangeText={setFocusTopic}
                     value={focusTopic}
-                    placeholder="Enter Focus Topic (eg. Forgiveness) (Leave Blank for Program to Select Suitable Topic)"
+                    placeholder="Enter Focus Topic (eg. Forgiveness)"// (Leave Blank for Program to Select Suitable Topic)"
                     placeholderTextColor="grey"
                 />
+            </View>
 
-                <Text style={styles.inputLabel}>Preferred Bible</Text>
+            <View className={styles.inputGroup}>
+                <Text className={styles.inputLabel}>Preferred Bible</Text>
                 <TextInput
-                    style={styles.input}
+                    className={styles.input}
                     onChangeText={setBible}
                     value={bible}
                     placeholder="Enter Preferred Bible (eg. NIV)"
                     placeholderTextColor="grey"
                 />
-
-                {/* Button to submit the form and create a new session */}
-                <TouchableOpacity style={styles.button} onPress={handleCreateSession}>
-                {loading ? <ActivityIndicator animating = {true} size="small" color="#fff" /> : 
-                    <Text style={styles.buttonText}>Create Session</Text>
-                }
-                </TouchableOpacity>
             </View>
+
+            {/* Button to submit the form and create a new session */}
+            <TouchableOpacity className={styles.button} onPress={handleCreateSession}>
+            {loading ? <ActivityIndicator animating = {true} size="small" color="#fff" /> : 
+                <Text className={styles.buttonText}>Create Session</Text>
+            }
+            </TouchableOpacity>
+        </View>
         );
-    };
+};
 
     // Styles for the CreateSessionScreen
-    const styles = StyleSheet.create({
-        container: {
-            flex: 1,
-            backgroundColor: "white",
-            padding: 10,
-        },
-        inputLabel: {
-            fontSize: 13,
-            marginTop: 10,
-            marginBottom: 10,
-        },
-        input: {
-            paddingVertical: 4,
-            borderColor: "#444444",
-            borderWidth: 1,
-            borderRadius: 10,
-            paddingLeft: 10,
-            placeholderTextColor: 'grey'
-        },
-        button: {
-            backgroundColor: "#444444",
-            padding: 15,
-            borderRadius: 10,
-            marginTop: 20,
-        },
-        buttonText: {
-            color: "#fff",
-            textAlign: "center",
-            fontSize: 16,
-        },
-        errorMessage: {
-            color: "red",
-            fontSize: 16,
-            marginTop: 20,
-            marginBottom: 20,
-            textAlign: "center",
-        },
-    });
-    export default CreateSessionScreen;
+    export default withExpoSnack(CreateSessionScreen);
