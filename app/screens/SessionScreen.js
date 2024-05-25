@@ -9,7 +9,8 @@ const StyledText = styled(Text);
 
 const user = "Rueben";
 
-const SessionScreen = ({ navigation }) => {
+const SessionScreen = () => {
+  const navigation = useNavigation();
   return (
     <View className={styles.container}>
       <View className={styles.header}>
