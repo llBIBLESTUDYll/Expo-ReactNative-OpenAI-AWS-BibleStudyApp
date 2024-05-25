@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, FlatList, Image } from 'react-native';
 import { styled, withExpoSnack } from 'nativewind';
 import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
@@ -12,7 +12,10 @@ const user = "Rueben";
 const SessionScreen = ({ navigation }) => {
   return (
     <View className={styles.container}>
-      <View></View>
+      <View className={styles.header}>
+          <Ionicons name="list" size={28} color="black" />
+          <Image className={styles.avatar} source={require('../../design/avatar.png')}></Image>
+      </View>
       <View>
         <StyledText className={styles.welcomeText}>Welcome back,</StyledText>
         <Text className={styles.welcomeText}>{user}!</Text>
@@ -25,19 +28,19 @@ const SessionScreen = ({ navigation }) => {
           <Text className={styles.buttonText}>
             CREATE NEW STUDY
           </Text>
-          <Ionicons className={styles.caret} name="caret-forward" size={28} color="black" />
+          <Ionicons className={styles.tag} name="chevron-forward" size={28} color="black" />
         </TouchableOpacity>
         <TouchableOpacity className={styles.button} onPress={() => navigation.navigate('CreateSession')}>
           <Text className={styles.buttonText}>
             MY STUDIES
           </Text>
-          <Ionicons className={styles.caret} name="caret-forward" size={28} color="black" />
+          <Ionicons className={styles.tag} name="chevron-forward" size={28} color="black" />
         </TouchableOpacity>
         <TouchableOpacity className={styles.button} onPress={() => navigation.navigate('CreateSession')}>
           <Text className={styles.buttonText}>
             COMMUNITY STUDIES
           </Text>
-          <Ionicons className={styles.caret} name="caret-forward" size={28} color="black" />
+          <Ionicons className={styles.tag} name="chevron-forward" size={28} color="black" />
         </TouchableOpacity>
   </View>
   );
