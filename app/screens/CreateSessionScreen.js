@@ -207,7 +207,7 @@ const CreateSessionScreen = () => {
 
             {/* Button to submit the form and create a new session */}
             <TouchableOpacity className={styles.button} onPress={handleCreateSession}>
-            {loading ? <ActivityIndicator animating = {true} size="small" color="#fff" /> : 
+            {loading ? <ActivityIndicator animating = {true} size="small" color="black" /> : 
                 <Text className={styles.buttonText}>Create Session</Text>
             }
             </TouchableOpacity>
