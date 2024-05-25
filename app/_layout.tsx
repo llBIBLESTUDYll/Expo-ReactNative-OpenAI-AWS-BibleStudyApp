@@ -91,7 +91,7 @@ export default function RootLayout() {
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <NavigationContainer independent={true}>
-        <Stack.Navigator initialRouteName="Auth">
+        <Stack.Navigator initialRouteName="Tab">
           <Stack.Screen name="Splash" component={SplashStackScreen} options={{ headerShown: false }}/>
           <Stack.Screen name="Auth" component={AuthStackScreen} options={{ headerShown: false }}/>
           <Stack.Screen name="Tab" component={TabNavigator} options={{ headerShown: false }}/>
