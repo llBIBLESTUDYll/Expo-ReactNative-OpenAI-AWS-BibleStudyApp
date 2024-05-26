@@ -1,7 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { styled, withExpoSnack } from 'nativewind';
+import { useNavigation } from '@react-navigation/native';
+import { Ionicons } from '@expo/vector-icons';
+import { styles } from '../styles/ActiveStyle'
 
 const BibleStudySessionScreen = ( props ) => {
+  const navigation = useNavigation();
+  console.log('this is navigation ===============>', navigation);
   const { BibleStudyQuestions, questions, Questions, biblestudyquestions } = props.route.params.questions.BibleStudy ? props.route.params.questions.BibleStudy : props.route.params.questions;
   console.log("this is props" ,props, BibleStudyQuestions, biblestudyquestions, Questions, questions);
   let restion = BibleStudyQuestions ? BibleStudyQuestions : biblestudyquestions ? biblestudyquestions : Questions ? Questions : questions ? questions : null;
@@ -21,17 +27,20 @@ const BibleStudySessionScreen = ( props ) => {
     }
   };
 
+  const goToBack = () => {
+    navigation.goBack();
+  }
   return (
-    <View style={styles.container}>
-
+    <View className={styles.container}>
       {/* Header */}
-      <Text style={styles.header}>
-        QUESTION {currentQuestionIndex + 1}/{restion.length}
-      </Text>
-
+      <View className={styles.header}>
+          <Ionicons name="arrow-back-sharp" size={30} color="black" onClick={() => goToBack()} />
+          <Text className={styles.title}>Active Session</Text>
+          <Image className={styles.avatar} source={require('../../design/avatar.png')}></Image>
+      </View>
       {/* Current Question */}
-      <View style={styles.questionBox}>
-        <Text style={styles.questionText}>
+      <View className={styles.questionBox}>
+        <Text className={styles.questionText}>
           {restion[currentQuestionIndex].question}
         </Text>
       </View>
@@ -40,93 +49,42 @@ const BibleStudySessionScreen = ( props ) => {
       {restion[currentQuestionIndex].verses.map((verse, index) => (
         <TouchableOpacity 
           key={index} 
-          style={styles.verseBox}
+          className={styles.verseBox}
           onPress={() => handleVersePress(index)}
         >
-          <Text style={styles.verseTitle}>
+          <Text className={styles.verseTitle}>
             {verse.reference}
           </Text>
           {expandedVerseIndex === index && (
-            <Text style={styles.verseText}>
+            <Text className={styles.verseText}>
               {verse.text}
             </Text>
           )}
         </TouchableOpacity>
       ))}
-
+      <Text className={styles.page}>
+        QUESTION {currentQuestionIndex + 1}/{restion.length}
+      </Text>
       {/* Navigation Buttons */}
-      <View style={styles.navigationButtons}>
+      <View className={styles.navigationButtons}>
         <TouchableOpacity 
-          style={styles.navButton}
+          className={styles.navButton}
           disabled={currentQuestionIndex === 0}
           onPress={() => setCurrentQuestionIndex(currentQuestionIndex - 1)}
         >
-          <Text style={styles.navButtonText}>Previous</Text>
+          <Text className={styles.navButtonText}>Previous</Text>
         </TouchableOpacity>
         <TouchableOpacity 
-          style={styles.navButton}
+          className={styles.navButton}
           disabled={currentQuestionIndex === restion.length - 1}
           onPress={() => setCurrentQuestionIndex(currentQuestionIndex + 1)}
         >
-          <Text style={styles.navButtonText}>Next</Text>
+          <Text className={styles.navButtonText}>Next</Text>
         </TouchableOpacity>
       </View>
 
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'white',
-    padding: 16,
-  },
-  header: {
-    fontSize: 12,
-    color: '#444444',
-    fontWeight: 'bold',
-    marginBottom: 16,
-    paddingLeft: 4,
-  },
-  questionBox: {
-    backgroundColor: '#ccc1b4',
-    borderRadius: 8,
-    padding: 16,
-    marginBottom: 16,
-  },
-  questionText: {
-    color: '#444444',
-    fontWeight: 'bold',
-  },
-  verseBox: {
-    backgroundColor: '#e8ebe9',
-    borderRadius: 8,
-    padding: 16,
-    marginBottom: 8,
-  },
-  verseTitle: {
-    color: '#444444',
-    fontWeight: 'bold',
-  },
-  verseText: {
-    color: '#444444',
-    marginTop: 8,
-  },
-  navigationButtons: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  navButton: {
-    padding: 12,
-    backgroundColor: '#444444',
-    borderRadius: 8,
-    width: '48%',
-    alignItems: 'center',
-  },
-  navButtonText: {
-    color: 'white',
-  },
-});
 
 export default BibleStudySessionScreen;
