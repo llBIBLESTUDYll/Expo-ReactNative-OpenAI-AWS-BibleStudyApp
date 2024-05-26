@@ -1,5 +1,5 @@
 export const styles = {
-    container: 'p-8',
+    container: 'p-8 flex',
     header: 'flex flex-row flex-wrap justify-between',
     title: 'text-2xl',
     avatar: 'w-12 h-12 rounded-3xl',

@@ -4,7 +4,7 @@ export const styles = {
     title: 'text-2xl',
     avatar: 'w-12 h-12 rounded-3xl',
     postar: 'text-4xl text-center my-5 font-bold',
-    button: 'p-5 rounded-xl mt-5 border-gray-300 border-2',
+    button: 'px-5 py-3 rounded-xl mt-5 border-gray-300 border-2',
     buttonText: 'text-xl text-center',
     inputGroup: 'my-4',
     inputLabel: 'text-sm font-bold my-1',
