@@ -56,9 +56,9 @@ const SettingsScreen = ({ navigation }) => {
 
   return (
     <View className={styles.container} style={{height: '100%', backgroundColor: theme.backgroundColor}}>
-      <View className={styles.header} style={{backgroundColor: theme.backgroundColor}}>
-        <Ionicons name="arrow-back-sharp" size={30} color="black" onClick={() => goToBack()} />
-        <Text className={styles.title}>Settings</Text>
+      <View className={styles.header}>
+        <Ionicons name="arrow-back-sharp" size={30} color={theme.header.icon} onClick={() => goToBack()} />
+        <Text className={styles.title} style={{color: theme.header.title}}>Settings</Text>
         <Image className={styles.avatar} source={require('../../design/avatar.png')}></Image>
       </View>
       <TouchableOpacity className={styles.settingContainer} onPress={() => setIsProfile(!isProfile)}>
@@ -79,7 +79,7 @@ const SettingsScreen = ({ navigation }) => {
       </TouchableOpacity>
 
       <TouchableOpacity className={styles.button} onPress={handleLogout}>
-        <Text className={styles.buttonText}>Log Out</Text>
+        <Text className={styles.buttonText} style={{color: theme.button.text}}>Log Out</Text>
       </TouchableOpacity>
 
       <Modal

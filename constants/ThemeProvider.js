@@ -3,12 +3,28 @@ import React, { createContext, useState, useContext } from 'react';
 // Define your themes
 const lightTheme = {
   textColor: 'black',
+  header: {
+    icon: 'black',
+    title: 'black'
+  },
+  button: {
+    text: 'black',
+  }
 };
 
 const darkTheme = {
   backgroundColor: 'black',
   textColor: 'white',
+  header: {
+    icon: 'white',
+    title: 'white'
+  },
+  button: {
+    text: 'white',
+  }
 };
+
+
 
 // Create the theme context
 const ThemeContext = createContext();
