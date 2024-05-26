@@ -9,7 +9,8 @@ const lightTheme = {
   },
   button: {
     text: 'black',
-  }
+  },
+  poster: 'black'
 };
 
 const darkTheme = {
@@ -21,7 +22,8 @@ const darkTheme = {
   },
   button: {
     text: 'white',
-  }
+  },
+  poster: 'white'
 };
 
 
