@@ -1,4 +1,4 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
+import { DarkTheme, DefaultTheme } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
 // import { Stack } from 'expo-router';
 // import * as SplashScreen from 'expo-splash-screen';
@@ -11,7 +11,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { Ionicons } from '@expo/vector-icons';
 
 import { useColorScheme } from '@/hooks/useColorScheme';
-
+import { ThemeProvider } from '../constants/ThemeProvider';
 // Import the screens
 import SplashScreen from './screens/SplashScreen';
 import LoginScreen from './screens/LoginScreen';
@@ -73,6 +73,9 @@ return (
       },
     })}
     tabBarOptions={{
+      tabStyle: {
+        paddingVertical: 5,
+      },
       activeTintColor: 'dark grey',
       inactiveTintColor: 'grey',
     }}
@@ -87,9 +90,10 @@ return (
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
+  console.log('This is colorScheme in _layout', colorScheme)
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+    <ThemeProvider>
       <NavigationContainer independent={true}>
         <Stack.Navigator initialRouteName="Tab">
           <Stack.Screen name="Splash" component={SplashStackScreen} options={{ headerShown: false }}/>
