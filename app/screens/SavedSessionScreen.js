@@ -14,7 +14,8 @@ import { styled, withExpoSnack } from 'nativewind';
 import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import axios from "axios";
-import { styles } from '../styles/SavedStyle'
+import { styles } from '../styles/SavedStyle';
+import { em } from '../config/layout';
 import Constants from 'expo-constants';
 // This screen provides functionality for users to create a new Bible study session
 const CreateSessionScreen = () => {
@@ -53,12 +54,12 @@ const CreateSessionScreen = () => {
         <View className={styles.container}>
             <View className={styles.header}>
                 <Ionicons name="arrow-back-sharp" size={30} color="black" onClick={() => goToBack()} />
-                <Text className={styles.title}>Saved Session</Text>
+                <Text className={styles.title}>My Studies</Text>
                 <Image className={styles.avatar} source={require('../../design/avatar.png')}></Image>
             </View>
             <Text className={styles.postar}>Let's Study!</Text>
 
-            <ScrollView showsVerticalScrollIndicator={false} style={{height: 630}} className={styles.scroll}>
+            <ScrollView showsVerticalScrollIndicator={false} style={{height: 280 * em}} className={styles.scroll}>
                 <View className={styles.questionBox}>
                     <Text className={styles.questionText}>
                         Group Type: Family
