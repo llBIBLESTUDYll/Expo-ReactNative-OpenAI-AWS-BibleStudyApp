@@ -1,73 +1,104 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, Switch, TouchableOpacity } from 'react-native';
-
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet, Switch, TouchableOpacity, Image, Modal, Keyboard, BackHandler } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+import { styles } from '../styles/SettingStyle';
 const SettingsScreen = ({ navigation }) => {
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isAbout, setIsAbout] = useState(false);
+  const [isProfile, setIsProfile] = useState(false);
 
   const toggleDarkMode = () => {
     setIsDarkMode(previousState => !previousState);
   };
 
   const handleLogout = () => {
-  // cleanup logic here
-  // ...
-  
-  navigation.reset({
-    index: 0,
-    routes: [{ name: 'Auth' }],
-  });
+    navigation.reset({
+      index: 0,
+      routes: [{ name: 'Auth' }],
+    });
+  };
+  const goToBack = () => {
+    navigation.goBack();
+  }
+  const closeModal = () => {
+    setIsAbout(false);
+    setIsProfile(false);
+  };
+  // Event listener for tapping outside of modal
+  const handleTapOutside = () => {
+    closeModal();
   };
 
+  // Event listener for pressing the escape key
+  const handleEscapePress = () => {
+    closeModal();
+  };
+
+
+  useEffect(() => {
+    if (isAbout) {
+      // Listen for tapping outside of modal
+      const outsideListener = Keyboard.addListener('keyboardDidHide', handleTapOutside);
+      
+      // Listen for pressing the escape key
+      const escapeListener = BackHandler.addEventListener('hardwareBackPress', handleEscapePress);
+
+      return () => {
+        // Clean up event listeners when modal is closed
+        outsideListener.remove();
+        escapeListener.remove();
+      };
+    }
+  }, [isAbout]);
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Settings</Text>
-
-      <View style={styles.settingContainer}>
-        <Text style={styles.settingDescription}>Dark Mode</Text>
-        <Switch value={isDarkMode} onValueChange={toggleDarkMode} />
+    <View className={styles.container}>
+      <View className={styles.header}>
+        <Ionicons name="arrow-back-sharp" size={30} color="black" onClick={() => goToBack()} />
+        <Text className={styles.title}>Settings</Text>
+        <Image className={styles.avatar} source={require('../../design/avatar.png')}></Image>
       </View>
-
-      <TouchableOpacity style={styles.button} onPress={handleLogout}>
-        <Text style={styles.buttonText}>Log Out</Text>
+      <TouchableOpacity className={styles.settingContainer} onPress={() => setIsProfile(!isProfile)}>
+        <Text className={styles.settingDescription}>Profile</Text>
+        <Ionicons name="person" size={30} color="black" onClick={() => goToBack()} />
       </TouchableOpacity>
+      <TouchableOpacity className={styles.settingContainer} onPress={() => setIsAbout(!isAbout)}>
+        <Text className={styles.settingDescription}>About Us</Text>
+        <Ionicons name="information-circle-sharp" size={30} color="black" onClick={() => goToBack()} />
+      </TouchableOpacity>
+      <TouchableOpacity className={styles.settingContainer}>
+        <Text className={styles.settingDescription}>Donate</Text>
+        <Ionicons name="diamond" size={30} color="black" onClick={() => goToBack()} />
+      </TouchableOpacity>
+      <TouchableOpacity className={styles.settingContainer} disabled>
+        <Text className={styles.settingDescription}>Dark Mode</Text>
+        <Switch value={isDarkMode} onValueChange={toggleDarkMode} />
+      </TouchableOpacity>
+
+      <TouchableOpacity className={styles.button} onPress={handleLogout}>
+        <Text className={styles.buttonText}>Log Out</Text>
+      </TouchableOpacity>
+
+      <Modal
+        animationType={"slide"}
+        transparent={true}
+        visible={isAbout}
+        onRequestClose={closeModal}>
+          <View style={styles.modal}>
+            <Text>About Us</Text>
+          </View>
+      </Modal>
+      <Modal
+        animationType={"slide"}
+        transparent={true}
+        visible={isProfile}
+        onRequestClose={closeModal}>
+          <View style={styles.modal}>
+            <Text>Profile</Text>
+          </View>
+      </Modal>
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'white',
-    padding: 20,
-  },
-  title: {
-    fontSize: 24,
-    textAlign: 'center',
-    margin: 20,
-  },
-  settingContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    backgroundColor: '#ddd',
-    padding: 10,
-    marginBottom: 10,
-    borderRadius: 10,
-  },
-  settingDescription: {
-    fontSize: 18,
-  },
-  button: {
-    backgroundColor: '#444444',
-    padding: 15,
-    borderRadius: 10,
-    marginTop: 20,
-  },
-  buttonText: {
-    color: '#fff',
-    textAlign: 'center',
-    fontSize: 16,
-  },
-});
 
 export default SettingsScreen;
