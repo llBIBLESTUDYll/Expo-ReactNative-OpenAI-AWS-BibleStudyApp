@@ -6,7 +6,10 @@ import {
   TouchableOpacity,
   Text,
   ActivityIndicator,
+  Image
   } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+import { styles } from '../styles/QuestionStyle';
 
 const QuestionScreen = ({ navigation }) => {
 
@@ -18,49 +21,33 @@ const QuestionScreen = ({ navigation }) => {
     // You can navigate to the answer screen after submission
     navigation.navigate('Answer', { question });
   };
+  
+  const goToBack = () => {
+    navigation.goBack();
+  }  
   return (
-    <View style={styles.container}>
+    <View className={styles.container}>
+      <View className={styles.header}>
+          <Ionicons name="arrow-back-sharp" size={30} color="black" onClick={() => goToBack()} />
+          <Text className={styles.title}>Question</Text>
+          <Image className={styles.avatar} source={require('../../design/avatar.png')}></Image>
+      </View>
+      <Text className={styles.postar}>Please Ask Any Questions You Have!</Text>      
       <TextInput
         value={question}
         onChangeText={setQuestion}
         placeholder="Ask a question"
-        style={styles.input}
+        placeholderTextColor="grey"
+        className={styles.input}
       />
-      <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+      <TouchableOpacity className={styles.button} onPress={handleSubmit}>
       {loading ? (
         <ActivityIndicator size="small" color="#fff" />
       ) : (
-        <Text style={styles.buttonText}>Submit Question</Text>
+        <Text className={styles.buttonText}>Submit Question</Text>
       )}
     </TouchableOpacity>
     </View>
   );
 };
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "white",
-    padding: 10,
-  },
-  input: {
-    paddingVertical: 4,
-    borderColor: "#444444",
-    borderWidth: 1,
-    borderRadius: 10,
-    paddingLeft: 10,
-    marginVertical: 10,
-    marginHorizontal: 20,
-  },
-    button: {
-    backgroundColor: '#444444',
-    padding: 15,
-    borderRadius: 10,
-    marginTop: 20,
-  },
-  buttonText: {
-    color: '#fff',
-    textAlign: 'center',
-    fontSize: 16,
-  },
-});
 export default QuestionScreen;
