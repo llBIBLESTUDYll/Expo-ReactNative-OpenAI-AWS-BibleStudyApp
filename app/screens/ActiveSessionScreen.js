@@ -74,7 +74,7 @@ const BibleStudySessionScreen = ( props ) => {
         >
           <Text className={styles.navButtonText}>Previous</Text>
         </TouchableOpacity>
-        <TouchableOpacity 
+        <TouchableOpacity
           className={styles.navButton}
           disabled={currentQuestionIndex === restion.length - 1}
           onPress={() => setCurrentQuestionIndex(currentQuestionIndex + 1)}

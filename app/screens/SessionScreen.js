@@ -31,13 +31,13 @@ const SessionScreen = () => {
           </Text>
           <Ionicons className={styles.tag} name="chevron-forward" size={28} color="black" />
         </TouchableOpacity>
-        <TouchableOpacity className={styles.button} onPress={() => navigation.navigate('CreateSession')}>
+        <TouchableOpacity className={styles.button} onPress={() => navigation.navigate('SavedSession')}>
           <Text className={styles.buttonText}>
             MY STUDIES
           </Text>
           <Ionicons className={styles.tag} name="chevron-forward" size={28} color="black" />
         </TouchableOpacity>
-        <TouchableOpacity className={styles.button} onPress={() => navigation.navigate('CreateSession')}>
+        <TouchableOpacity className={styles.button} onPress={() => navigation.navigate('SavedSession')}>
           <Text className={styles.buttonText}>
             COMMUNITY STUDIES
           </Text>
