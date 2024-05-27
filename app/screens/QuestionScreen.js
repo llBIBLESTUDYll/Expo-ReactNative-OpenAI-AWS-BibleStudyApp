@@ -10,11 +10,13 @@ import {
   } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { styles } from '../styles/QuestionStyle';
+import { useTheme } from '../../constants/ThemeProvider';
 
 const QuestionScreen = ({ navigation }) => {
 
   const [question, setQuestion] = useState('');
   const [loading, setLoading] = useState(false);
+  const { theme, toggleTheme } = useTheme();
 
   const handleSubmit = () => {
     // Add code here to handle submission of the question
@@ -26,13 +28,13 @@ const QuestionScreen = ({ navigation }) => {
     navigation.goBack();
   }  
   return (
-    <View className={styles.container}>
+    <View className={styles.container} style={{height: '100%', backgroundColor: theme.backgroundColor}}>
       <View className={styles.header}>
-          <Ionicons name="arrow-back-sharp" size={30} color="black" onClick={() => goToBack()} />
-          <Text className={styles.title}>Question</Text>
+          <Ionicons name="arrow-back-sharp" size={30} color={theme.header.icon} onClick={() => goToBack()} />
+          <Text className={styles.title} style={{color: theme.header.title}}>Question</Text>
           <Image className={styles.avatar} source={require('../../design/avatar.png')}></Image>
       </View>
-      <Text className={styles.postar}>Please Ask Any Questions You Have!</Text>      
+      <Text className={styles.postar} style={{color: theme.poster}}>Please Ask Any Questions You Have!</Text>      
       <TextInput
         value={question}
         onChangeText={setQuestion}
@@ -44,7 +46,7 @@ const QuestionScreen = ({ navigation }) => {
       {loading ? (
         <ActivityIndicator size="small" color="#fff" />
       ) : (
-        <Text className={styles.buttonText}>Submit Question</Text>
+        <Text className={styles.buttonText} style={{color: theme.button.text}}>Submit Question</Text>
       )}
     </TouchableOpacity>
     </View>
