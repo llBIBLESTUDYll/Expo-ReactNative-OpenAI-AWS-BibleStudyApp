@@ -10,7 +10,10 @@ const lightTheme = {
   button: {
     text: 'black',
   },
-  poster: 'black'
+  poster: 'black',
+  inputLabel: 'black',
+  loading: 'black',
+  error: 'red'
 };
 
 const darkTheme = {
@@ -23,7 +26,10 @@ const darkTheme = {
   button: {
     text: 'white',
   },
-  poster: 'white'
+  poster: 'white',
+  inputLabel: 'white',
+  loading: 'white',
+  error: 'red'
 };
 
 

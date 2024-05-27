@@ -15,6 +15,7 @@ import { Ionicons } from '@expo/vector-icons';
 import axios from "axios";
 import { styles } from '../styles/CreateStyle'
 import Constants from 'expo-constants';
+import { useTheme } from '../../constants/ThemeProvider';
 // This screen provides functionality for users to create a new Bible study session
 const CreateSessionScreen = () => {
     const navigation = useNavigation();
@@ -33,6 +34,7 @@ const CreateSessionScreen = () => {
     const [apiResponse, setApiResponse] = useState("");
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+    const { theme, toggleTheme } = useTheme();
 
     // Effect hook to manage component mount state
     useEffect(() => {
@@ -138,18 +140,18 @@ const CreateSessionScreen = () => {
         navigation.goBack();
     }
     return (
-        <View className={styles.container}>
+        <View className={styles.container} style={{height: '100%', backgroundColor: theme.backgroundColor}}>
             <View className={styles.header}>
-                <Ionicons name="arrow-back-sharp" size={30} color="black" onClick={() => goToBack()} />
-                <Text className={styles.title}>Create Session</Text>
+                <Ionicons name="arrow-back-sharp" size={30} color={theme.header.icon} onClick={() => goToBack()} />
+                <Text className={styles.title} style={{color: theme.header.title}}>Create Session</Text>
                 <Image className={styles.avatar} source={require('../../design/avatar.png')}></Image>
             </View>
-            <Text className={styles.postar}>Let's Create!</Text>
-            {error && <Text className={styles.errorMessage}>{error}</Text>}
+            <Text className={styles.postar} style={{color: theme.poster}}>Let's Create!</Text>
+            {error && <Text className={styles.errorMessage} style={{color: theme.error}}>{error}</Text>}
 
             {/* Form fields to create a new Bible study session */}
             <View className={styles.inputGroup}>
-                <Text className={styles.inputLabel}>Group Type</Text>
+                <Text className={styles.inputLabel} style={{color: theme.inputLabel}}>Group Type</Text>
                 <TextInput
                     className={styles.input}
                     onChangeText={setGroupType}
@@ -160,7 +162,7 @@ const CreateSessionScreen = () => {
             </View>
 
             <View className={styles.inputGroup}>
-                <Text className={styles.inputLabel}>Number of Questions</Text>
+                <Text className={styles.inputLabel} style={{color: theme.inputLabel}}>Number of Questions</Text>
                 <TextInput
                     keyboardType="numeric"
                     className={styles.input}
@@ -172,7 +174,7 @@ const CreateSessionScreen = () => {
             </View>
 
             <View className={styles.inputGroup}>
-                <Text className={styles.inputLabel}>Number of Verses per Question</Text>
+                <Text className={styles.inputLabel} style={{color: theme.inputLabel}}>Number of Verses per Question</Text>
                 <TextInput
                     keyboardType="numeric"
                     className={styles.input}
@@ -184,7 +186,7 @@ const CreateSessionScreen = () => {
             </View>
 
             <View className={styles.inputGroup}>
-                <Text className={styles.inputLabel}>Focus Topic (Optional)</Text>
+                <Text className={styles.inputLabel} style={{color: theme.inputLabel}}>Focus Topic (Optional)</Text>
                 <TextInput
                     className={styles.input}
                     onChangeText={setFocusTopic}
@@ -195,7 +197,7 @@ const CreateSessionScreen = () => {
             </View>
 
             <View className={styles.inputGroup}>
-                <Text className={styles.inputLabel}>Preferred Bible</Text>
+                <Text className={styles.inputLabel} style={{color: theme.inputLabel}}>Preferred Bible</Text>
                 <TextInput
                     className={styles.input}
                     onChangeText={setBible}
@@ -207,8 +209,8 @@ const CreateSessionScreen = () => {
 
             {/* Button to submit the form and create a new session */}
             <TouchableOpacity className={styles.button} onPress={handleCreateSession}>
-            {loading ? <ActivityIndicator animating = {true} size="small" color="black" /> : 
-                <Text className={styles.buttonText}>Create Session</Text>
+            {loading ? <ActivityIndicator animating = {true} size="small" color={theme.loading} /> : 
+                <Text className={styles.buttonText} style={{color: theme.button.text}}>Create Session</Text>
             }
             </TouchableOpacity>
         </View>
