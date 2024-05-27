@@ -17,6 +17,7 @@ import axios from "axios";
 import { styles } from '../styles/SavedStyle';
 import { em } from '../config/layout';
 import Constants from 'expo-constants';
+import { useTheme } from '../../constants/ThemeProvider';
 // This screen provides functionality for users to create a new Bible study session
 const CreateSessionScreen = () => {
     const navigation = useNavigation();
@@ -35,6 +36,7 @@ const CreateSessionScreen = () => {
     const [apiResponse, setApiResponse] = useState("");
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+    const { theme, toggleTheme } = useTheme();
 
     // Effect hook to manage component mount state
     useEffect(() => {
@@ -51,16 +53,16 @@ const CreateSessionScreen = () => {
         navigation.goBack();
     }
     return (
-        <View className={styles.container}>
+        <View className={styles.container} style={{height: '100%', backgroundColor: theme.backgroundColor}}>
             <View className={styles.header}>
-                <Ionicons name="arrow-back-sharp" size={30} color="black" onClick={() => goToBack()} />
-                <Text className={styles.title}>My Studies</Text>
+                <Ionicons name="arrow-back-sharp" size={30} color={theme.header.icon} onClick={() => goToBack()} />
+                <Text className={styles.title} style={{color: theme.header.title}}>My Studies</Text>
                 <Image className={styles.avatar} source={require('../../design/avatar.png')}></Image>
             </View>
-            <Text className={styles.postar}>Let's Study!</Text>
+            <Text className={styles.postar} style={{color: theme.poster}}>Let's Study!</Text>
 
-            <ScrollView showsVerticalScrollIndicator={false} style={{height: 280 * em}} className={styles.scroll}>
-                <View className={styles.questionBox}>
+            <ScrollView showsVerticalScrollIndicator={false} className={styles.scroll}>
+                <TouchableOpacity className={styles.questionBox}>
                     <Text className={styles.questionText}>
                         Group Type: Family
                     </Text>
@@ -76,8 +78,8 @@ const CreateSessionScreen = () => {
                     <Text className={styles.questionText}>
                         Preferred Bible: NIV
                     </Text>
-                </View>
-                <View className={styles.questionBox}>
+                </TouchableOpacity>
+                <TouchableOpacity className={styles.questionBox}>
                     <Text className={styles.questionText}>
                         Group Type: Family
                     </Text>
@@ -93,8 +95,8 @@ const CreateSessionScreen = () => {
                     <Text className={styles.questionText}>
                         Preferred Bible: NIV
                     </Text>
-                </View>      
-                <View className={styles.questionBox}>
+                </TouchableOpacity>      
+                <TouchableOpacity className={styles.questionBox}>
                     <Text className={styles.questionText}>
                         Group Type: Family
                     </Text>
@@ -110,8 +112,8 @@ const CreateSessionScreen = () => {
                     <Text className={styles.questionText}>
                         Preferred Bible: NIV
                     </Text>
-                </View>
-                <View className={styles.questionBox}>
+                </TouchableOpacity>
+                <TouchableOpacity className={styles.questionBox}>
                     <Text className={styles.questionText}>
                         Group Type: Family
                     </Text>
@@ -127,8 +129,8 @@ const CreateSessionScreen = () => {
                     <Text className={styles.questionText}>
                         Preferred Bible: NIV
                     </Text>
-                </View>
-                <View className={styles.questionBox}>
+                </TouchableOpacity>
+                <TouchableOpacity className={styles.questionBox}>
                     <Text className={styles.questionText}>
                         Group Type: Family
                     </Text>
@@ -144,8 +146,8 @@ const CreateSessionScreen = () => {
                     <Text className={styles.questionText}>
                         Preferred Bible: NIV
                     </Text>
-                </View>
-                <View className={styles.questionBox}>
+                </TouchableOpacity>
+                <TouchableOpacity className={styles.questionBox}>
                     <Text className={styles.questionText}>
                         Group Type: Family
                     </Text>
@@ -161,7 +163,7 @@ const CreateSessionScreen = () => {
                     <Text className={styles.questionText}>
                         Preferred Bible: NIV
                     </Text>
-                </View>
+                </TouchableOpacity>
             </ScrollView>
             <TouchableOpacity className={styles.pagenation} disabled>
                 <Ionicons className={styles.tag} name="play-skip-back" size={28} color="black" />
