@@ -16,7 +16,7 @@ export const styles = {
     verseTitle: 'font-bold',
     verseText: 'my-1',
     navigationButtons: 'flex-row justify-between',
-    navButton: 'w-36 p-5 rounded-xl mt-5 border-gray-300 border-2',
+    navButton: 'w-36 px-5 py-3 rounded-xl mt-5 border-gray-300 border-2',
     navButtonText: 'text-xl text-center',
     page: 'text-center'
     //   questionBox: {

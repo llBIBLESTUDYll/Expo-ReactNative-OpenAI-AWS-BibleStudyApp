@@ -4,8 +4,10 @@ import { styled, withExpoSnack } from 'nativewind';
 import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import { styles } from '../styles/ActiveStyle'
+import { useTheme } from '../../constants/ThemeProvider';
 
 const BibleStudySessionScreen = ( props ) => {
+  const { theme, toggleTheme } = useTheme();
   const navigation = useNavigation();
   console.log('this is navigation ===============>', navigation);
   const { BibleStudyQuestions, questions, Questions, biblestudyquestions } = props.route.params.questions.BibleStudy ? props.route.params.questions.BibleStudy : props.route.params.questions;
@@ -31,38 +33,39 @@ const BibleStudySessionScreen = ( props ) => {
     navigation.goBack();
   }
   return (
-    <View className={styles.container}>
+    <View className={styles.container} style={{height: '100%', backgroundColor: theme.backgroundColor}}>
       {/* Header */}
       <View className={styles.header}>
-          <Ionicons name="arrow-back-sharp" size={30} color="black" onClick={() => goToBack()} />
-          <Text className={styles.title}>Active Session</Text>
+          <Ionicons name="arrow-back-sharp" size={30} color={theme.header.icon} onClick={() => goToBack()} />
+          <Text className={styles.title} style={{color: theme.header.title}}>Active Session</Text>
           <Image className={styles.avatar} source={require('../../design/avatar.png')}></Image>
       </View>
       {/* Current Question */}
-      <View className={styles.questionBox}>
+      <View className={styles.questionBox} style={{height: '15%'}}>
         <Text className={styles.questionText}>
           {restion[currentQuestionIndex].question}
         </Text>
       </View>
-
-      {/* Verses List */}
-      {restion[currentQuestionIndex].verses.map((verse, index) => (
-        <TouchableOpacity 
-          key={index} 
-          className={styles.verseBox}
-          onPress={() => handleVersePress(index)}
-        >
-          <Text className={styles.verseTitle}>
-            {verse.reference}
-          </Text>
-          {expandedVerseIndex === index && (
-            <Text className={styles.verseText}>
-              {verse.text}
+      <View style={{height: '57%'}}>
+        {/* Verses List */}
+        {restion[currentQuestionIndex].verses.map((verse, index) => (
+          <TouchableOpacity 
+            key={index} 
+            className={styles.verseBox}
+            onPress={() => handleVersePress(index)}
+          >
+            <Text className={styles.verseTitle}>
+              {verse.reference}
             </Text>
-          )}
-        </TouchableOpacity>
-      ))}
-      <Text className={styles.page}>
+            {expandedVerseIndex === index && (
+              <Text className={styles.verseText}>
+                {verse.text}
+              </Text>
+            )}
+          </TouchableOpacity>
+        ))}
+      </View>
+      <Text className={styles.page} style={{color: theme.header.title}}>
         QUESTION {currentQuestionIndex + 1}/{restion.length}
       </Text>
       {/* Navigation Buttons */}
@@ -72,14 +75,14 @@ const BibleStudySessionScreen = ( props ) => {
           disabled={currentQuestionIndex === 0}
           onPress={() => setCurrentQuestionIndex(currentQuestionIndex - 1)}
         >
-          <Text className={styles.navButtonText}>Previous</Text>
+          <Text className={styles.navButtonText} style={{color: theme.button.text}}>Previous</Text>
         </TouchableOpacity>
         <TouchableOpacity
           className={styles.navButton}
           disabled={currentQuestionIndex === restion.length - 1}
           onPress={() => setCurrentQuestionIndex(currentQuestionIndex + 1)}
         >
-          <Text className={styles.navButtonText}>Next</Text>
+          <Text className={styles.navButtonText} style={{color: theme.button.text}}>Next</Text>
         </TouchableOpacity>
       </View>
 
