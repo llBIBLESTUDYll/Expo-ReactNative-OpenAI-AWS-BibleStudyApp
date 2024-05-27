@@ -75,7 +75,7 @@ const SettingsScreen = ({ navigation }) => {
       </TouchableOpacity>
       <TouchableOpacity className={styles.settingContainer} disabled>
         <Text className={styles.settingDescription}>Dark Mode</Text>
-        <Switch value={isDarkMode} onValueChange={toggleDarkMode} />
+        <Switch value={isDarkMode} trackColor={{ false: 'gray', true: 'black' }} onValueChange={toggleDarkMode} />
       </TouchableOpacity>
 
       <TouchableOpacity className={styles.button} onPress={handleLogout}>
