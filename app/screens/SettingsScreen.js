@@ -1,12 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Switch, TouchableOpacity, Image, Modal, Keyboard, BackHandler } from 'react-native';
+import { View, Text, TextInput, StyleSheet, Switch, TouchableOpacity, Image, Modal, Keyboard, BackHandler, ActivityIndicator } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { styles } from '../styles/SettingStyle';
 import { useTheme } from '../../constants/ThemeProvider';
+import  {Auth}  from 'aws-amplify';
+
 const SettingsScreen = ({ navigation }) => {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [isAbout, setIsAbout] = useState(false);
   const [isProfile, setIsProfile] = useState(false);
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
   const { theme, toggleTheme } = useTheme();
 
   const toggleDarkMode = () => {
@@ -37,6 +43,29 @@ const SettingsScreen = ({ navigation }) => {
     closeModal();
   };
 
+  const update = () => {
+    setLoading(true);
+    Auth.currentAuthenticatedUser()
+        .then(user => {
+          console.log('this is logined user', user.attributes)
+          return Auth.updateUserAttributes(user, {
+            'name': username,
+            'email': email
+          });
+        })
+        .then(data => {console.log(data); setLoading(false); closeModal();})
+        .catch(err => console.log(err));
+  }
+
+  useEffect(() => {
+    Auth.currentAuthenticatedUser()
+        .then(user => {
+          console.log('this is logined user', user.attributes)
+          setUsername(user.attributes.name ? user.attributes.name : '')
+          setEmail(user.attributes.email ? user.attributes.email : '')
+        })
+        .catch(err => console.log(err));
+  }, [])
 
   useEffect(() => {
     if (isAbout) {
@@ -97,7 +126,30 @@ const SettingsScreen = ({ navigation }) => {
         visible={isProfile}
         onRequestClose={closeModal}>
           <View style={styles.modal}>
-            <Text>Profile</Text>
+            <Text className={styles.postar}>Change Your Profile</Text>
+            <View className={styles.inputGroup}>
+                <Text className={styles.inputLabel}>username</Text>
+                <TextInput
+                    className={styles.input}
+                    onChangeText={setUsername}
+                    value={username}
+                    // placeholder="Enter Group Type (eg. Family)"
+                    placeholderTextColor="grey"
+                />
+            </View>
+            <View className={styles.inputGroup}>
+                <Text className={styles.inputLabel}>email</Text>
+                <TextInput
+                    className={styles.input}
+                    onChangeText={setEmail}
+                    value={email}
+                    // placeholder="Enter Group Type (eg. Family)"
+                    placeholderTextColor="grey"
+                />
+            </View>
+            <TouchableOpacity className={styles.button} onPress={update}>
+            { loading ? <ActivityIndicator animating = {true} size="small" color={theme.loading} /> : <Text className={styles.buttonText}>Change</Text> }
+            </TouchableOpacity>
           </View>
       </Modal>
     </View>
