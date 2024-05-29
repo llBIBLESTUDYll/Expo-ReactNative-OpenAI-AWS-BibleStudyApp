@@ -4,6 +4,8 @@ import { Ionicons } from '@expo/vector-icons';
 import { styles } from '../styles/SettingStyle';
 import { useTheme } from '../../constants/ThemeProvider';
 import  {Auth}  from 'aws-amplify';
+import axios from 'axios';
+const apiEndpoint = 'https://7tyvicof5e.execute-api.us-east-1.amazonaws.com/this_is_stage_of_deploy_api/';
 
 const SettingsScreen = ({ navigation }) => {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -55,6 +57,19 @@ const SettingsScreen = ({ navigation }) => {
         })
         .then(data => {console.log(data); setLoading(false); closeModal();})
         .catch(err => console.log(err));
+  }
+
+  const testAPI = async () => {
+    setLoading(true);
+    try {
+      // Make the API call
+      const response = await axios.post(apiEndpoint);
+      setLoading(false)
+      console.log('Response data:', response.data);
+    } catch (error) {
+      setLoading(false)
+      console.error('Error:', error);
+    }
   }
 
   useEffect(() => {
@@ -117,7 +132,9 @@ const SettingsScreen = ({ navigation }) => {
         visible={isAbout}
         onRequestClose={closeModal}>
           <View style={styles.modal}>
-            <Text>About Us</Text>
+            <TouchableOpacity className={styles.button} onPress={testAPI}>
+            { loading ? <ActivityIndicator animating = {true} size="small" color={theme.loading} /> : <Text className={styles.buttonText}>Test</Text> }
+            </TouchableOpacity>
           </View>
       </Modal>
       <Modal
