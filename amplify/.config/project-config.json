@@ -1,0 +1,17 @@
+{
+  "projectName": "Bible",
+  "version": "3.1",
+  "frontend": "javascript",
+  "javascript": {
+    "framework": "react-native",
+    "config": {
+      "SourceDir": "app",
+      "DistributionDir": "/",
+      "BuildCommand": "eas build --platform ios --profile ios-simulator",
+      "StartCommand": "npm start"
+    }
+  },
+  "providers": [
+    "awscloudformation"
+  ]
+}

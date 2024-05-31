@@ -21,7 +21,7 @@ import SettingsScreen from './screens/SettingsScreen';
 import SessionStackScreen from './screens/SessionStackScreen';
 import QuestionScreen from './screens/QuestionScreen';
 import {Amplify} from 'aws-amplify';
-import aws_exports from './config/aws_exports';
+import aws_exports from './aws-exports';
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 // SplashScreen.preventAutoHideAsync();
 Amplify.configure(aws_exports);
@@ -95,7 +95,7 @@ export default function RootLayout() {
   return (
     <ThemeProvider>
       <NavigationContainer independent={true}>
-        <Stack.Navigator initialRouteName="Tab">
+        <Stack.Navigator initialRouteName="Auth">
           <Stack.Screen name="Splash" component={SplashStackScreen} options={{ headerShown: false }}/>
           <Stack.Screen name="Auth" component={AuthStackScreen} options={{ headerShown: false }}/>
           <Stack.Screen name="Tab" component={TabNavigator} options={{ headerShown: false }}/>

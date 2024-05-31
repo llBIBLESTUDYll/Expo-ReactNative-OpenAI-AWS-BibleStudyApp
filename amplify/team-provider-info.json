@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-bible-dev-1f31a-authRole",
+      "UnauthRoleArn": "arn:aws:iam::905418249201:role/amplify-bible-dev-1f31a-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::905418249201:role/amplify-bible-dev-1f31a-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-bible-dev-1f31a-deployment",
+      "UnauthRoleName": "amplify-bible-dev-1f31a-unauthRole",
+      "StackName": "amplify-bible-dev-1f31a",
+      "StackId": "arn:aws:cloudformation:us-east-1:905418249201:stack/amplify-bible-dev-1f31a/f66eecf0-1e26-11ef-b4b6-12609d38ab9d",
+      "AmplifyAppId": "dyza66bm6bt8s"
+    },
+    "categories": {
+      "auth": {
+        "biblef7dad22a": {}
+      }
+    }
+  }
+}
