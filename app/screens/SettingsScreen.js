@@ -63,7 +63,9 @@ const SettingsScreen = ({ navigation }) => {
     setLoading(true);
     try {
       // Make the API call
-      const data = await API.get('secondTestForBible', '/items')
+      const data = await API.get('secondTestForBible', '/session', {
+        init: [{id: 1}]
+      })
       // const response = await axios.get(apiEndpoint);
       setLoading(false)
       console.log('Response data:', data);

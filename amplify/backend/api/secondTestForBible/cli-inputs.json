@@ -13,6 +13,19 @@
           "delete"
         ]
       }
+    },
+    "/session": {
+      "name": "/session",
+      "lambdaFunction": "session",
+      "permissions": {
+        "setting": "private",
+        "auth": [
+          "create",
+          "read",
+          "update",
+          "delete"
+        ]
+      }
     }
   }
 }

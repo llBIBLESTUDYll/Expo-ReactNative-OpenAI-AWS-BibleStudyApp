@@ -20,6 +20,10 @@
         "secondTestLambda": {
           "deploymentBucketName": "amplify-bible-dev-1f31a-deployment",
           "s3Key": "amplify-builds/secondTestLambda-3963436d512b586e4a2b-build.zip"
+        },
+        "session": {
+          "deploymentBucketName": "amplify-bible-dev-1f31a-deployment",
+          "s3Key": "amplify-builds/session-2f576275426439706244-build.zip"
         }
       },
       "api": {

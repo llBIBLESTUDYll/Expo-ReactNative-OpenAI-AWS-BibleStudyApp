@@ -9,6 +9,14 @@
           ],
           "category": "function",
           "resourceName": "secondTestLambda"
+        },
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "session"
         }
       ],
       "providerPlugin": "awscloudformation",
@@ -48,6 +56,11 @@
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
+    },
+    "session": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
     }
   },
   "parameters": {
@@ -64,6 +77,22 @@
         {
           "category": "function",
           "resourceName": "secondTestLambda"
+        }
+      ]
+    },
+    "AMPLIFY_function_session_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "session"
+        }
+      ]
+    },
+    "AMPLIFY_function_session_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "session"
         }
       ]
     }
