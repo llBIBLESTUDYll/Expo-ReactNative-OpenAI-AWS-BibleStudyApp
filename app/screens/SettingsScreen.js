@@ -3,7 +3,7 @@ import { View, Text, TextInput, StyleSheet, Switch, TouchableOpacity, Image, Mod
 import { Ionicons } from '@expo/vector-icons';
 import { styles } from '../styles/SettingStyle';
 import { useTheme } from '../../constants/ThemeProvider';
-import  {Auth}  from 'aws-amplify';
+import  {Auth, API}  from 'aws-amplify';
 import axios from 'axios';
 const apiEndpoint = 'https://7tyvicof5e.execute-api.us-east-1.amazonaws.com/this_is_stage_of_deploy_api/';
 
@@ -63,9 +63,10 @@ const SettingsScreen = ({ navigation }) => {
     setLoading(true);
     try {
       // Make the API call
-      const response = await axios.post(apiEndpoint);
+      const data = await API.get('secondTestForBible', '/items')
+      // const response = await axios.get(apiEndpoint);
       setLoading(false)
-      console.log('Response data:', response.data);
+      console.log('Response data:', data);
     } catch (error) {
       setLoading(false)
       console.error('Error:', error);

@@ -9,11 +9,21 @@
       "UnauthRoleName": "amplify-bible-dev-1f31a-unauthRole",
       "StackName": "amplify-bible-dev-1f31a",
       "StackId": "arn:aws:cloudformation:us-east-1:905418249201:stack/amplify-bible-dev-1f31a/f66eecf0-1e26-11ef-b4b6-12609d38ab9d",
-      "AmplifyAppId": "dyza66bm6bt8s"
+      "AmplifyAppId": "dyza66bm6bt8s",
+      "APIGatewayAuthURL": "https://s3.amazonaws.com/amplify-bible-dev-1f31a-deployment/amplify-cfn-templates/api/APIGatewayAuthStack.json"
     },
     "categories": {
       "auth": {
         "biblef7dad22a": {}
+      },
+      "function": {
+        "secondTestLambda": {
+          "deploymentBucketName": "amplify-bible-dev-1f31a-deployment",
+          "s3Key": "amplify-builds/secondTestLambda-3963436d512b586e4a2b-build.zip"
+        }
+      },
+      "api": {
+        "secondTestForBible": {}
       }
     }
   }
