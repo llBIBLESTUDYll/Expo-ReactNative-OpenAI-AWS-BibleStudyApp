@@ -39,7 +39,7 @@ const SessionScreen = () => {
           </Text>
           <Ionicons className={styles.tag} name="chevron-forward" size={28} color={theme.header.icon} />
         </TouchableOpacity>
-        <TouchableOpacity className={styles.button} onPress={() => navigation.navigate('SavedSession')}>
+        <TouchableOpacity className={styles.button} onPress={() => navigation.navigate('CommunitySession')}>
           <Text className={styles.buttonText} style={{color: theme.button.text}}>
             COMMUNITY STUDIES
           </Text>

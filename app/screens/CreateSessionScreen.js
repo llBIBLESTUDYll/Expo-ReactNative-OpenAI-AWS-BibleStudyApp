@@ -21,6 +21,7 @@ const CreateSessionScreen = () => {
     const navigation = useNavigation();
 
     // State hooks to manage form inputs and other variables
+    const [title, setTitle] = useState("");
     const [groupType, setGroupType] = useState("");
     const [numberQuestions, setNumberQuestions] = useState("");
     const [numberVerses, setNumberVerses] = useState("");
@@ -150,6 +151,16 @@ const CreateSessionScreen = () => {
             {error && <Text className={styles.errorMessage} style={{color: theme.error}}>{error}</Text>}
 
             {/* Form fields to create a new Bible study session */}
+            <View className={styles.inputGroup}>
+                <Text className={styles.inputLabel} style={{color: theme.inputLabel}}>Title</Text>
+                <TextInput
+                    className={styles.input}
+                    onChangeText={setTitle}
+                    value={title}
+                    placeholder="Enter Session Title"
+                    placeholderTextColor="grey"
+                />
+            </View>            
             <View className={styles.inputGroup}>
                 <Text className={styles.inputLabel} style={{color: theme.inputLabel}}>Group Type</Text>
                 <TextInput

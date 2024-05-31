@@ -6,6 +6,7 @@ import SessionScreen from './SessionScreen';
 import ActiveSessionScreen from './ActiveSessionScreen';
 import CreateSessionScreen from './CreateSessionScreen';
 import SavedSessionScreen from './SavedSessionScreen';
+import CommunitySessionScreen from './CommunitySessionScreen';
 import SessionDetailsScreen from './SessionDetailsScreen';
 
 // Create a Stack Navigator for Sessions
@@ -18,6 +19,7 @@ const SessionStackScreen = () => {
       <SessionStack.Screen name="ActiveSession" component={ActiveSessionScreen} options={{ headerShown: false }}/>
       <SessionStack.Screen name="CreateSession" component={CreateSessionScreen} options={{ headerShown: false }} />
       <SessionStack.Screen name="SavedSession" component={SavedSessionScreen} options={{ headerShown: false }} />
+      <SessionStack.Screen name="CommunitySession" component={CommunitySessionScreen} options={{ headerShown: false }} />
       <SessionStack.Screen name="SessionDetails" component={SessionDetailsScreen} />
     </SessionStack.Navigator>
   );
