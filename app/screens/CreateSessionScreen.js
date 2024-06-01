@@ -95,7 +95,7 @@ const CreateSessionScreen = () => {
             const question_data = JSON.parse(completion.data.choices[0].message.content);
             //completion.data.choices[0].message.content;
             if (isMounted && (!question_data.error && !question_data.Error) ) {
-                navigation.navigate("ActiveSession", { questions: question_data });
+                navigation.navigate("ActiveSession", { questions: question_data, sessionInfo: {title, groupType, numberQuestions, numberVerses, focusTopic, bible} });
             }
             if(isMounted && (question_data.error || question_data.Error)) {
                 let errorMessage = question_data.error;

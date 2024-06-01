@@ -20,7 +20,7 @@ const server = awsServerlessExpress.createServer(app);
 /**
  * @type {import('@types/aws-lambda').APIGatewayProxyHandler}
  */
-exports.handler = (event, context) => {
+exports.handler = async (event, context) => {
   // console.log(`EVENT: ${JSON.stringify(event)}`);
   // return awsServerlessExpress.proxy(server, event, context, 'PROMISE').promise;
 
@@ -33,38 +33,9 @@ exports.handler = (event, context) => {
   console.log('Path:', path);
   console.log('Query String Parameters:', queryStringParameters);
   console.log('Request Body:', body);
-  // return new Promise((resolve, reject) => {
-  //   connection.query('SELECT * FROM test', (error, results) => {
-  //     if(error) {
-  //       reject(error);
-  //     } else {
-  //       resolve({
-  //         statusCode: 200,
-  //         headers: {
-  //           'Content-Type': 'application/json',
-  //           'Access-Control-Allow-Origin': '*', // Allow from any origin
-  //           'Access-Control-Allow-Headers': '*', // Allow any headers
-  //           'Access-Control-Allow-Methods': 'OPTIONS,POST,GET', // Allow these methods
-  //         },
-  //         body: JSON.stringify(results)
-  //       });
-  //     }
-  //   });
-  // });
-  return new Promise((resolve, reject) => {
-    // Handle different HTTP methods
-    resolve({
-      statusCode: 200,
-      headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*', // Allow from any origin
-        'Access-Control-Allow-Headers': '*', // Allow any headers
-        'Access-Control-Allow-Methods': 'OPTIONS,POST,GET', // Allow these methods
-      },
-      body: JSON.stringify({method, path, queryStringParameters, body}),
-    });
 
-    
+  return new Promise( async (resolve, reject) => {
+    // Handle different HTTP methods    
     if (method === 'GET') {
       connection.query('SELECT * FROM your_table', (error, results) => {
         if (error) {
@@ -92,12 +63,13 @@ exports.handler = (event, context) => {
         }
       });
     } else if (method === 'POST') {
-      // Handle POST request
-      const { column1, column2 } = body;
-      connection.query(
-        'INSERT INTO your_table (column1, column2) VALUES (?, ?)',
-        [column1, column2],
-        (error, results) => {
+
+      const { user, restion, sessionInfo } = body;
+      const session_sql = 'INSERT INTO sessions (title, username, groupType, questionCount, versesCount, topic, prefered) VALUES (?, ?, ?, ?, ?, ?, ?)';
+      await connection.query(
+        session_sql,
+        [sessionInfo.title, user.username, sessionInfo.groupType, sessionInfo.numberQuestions, sessionInfo.numberVerses, sessionInfo.focusTopic, sessionInfo.bible],
+        async (error, results) => {
           if (error) {
             reject({
               statusCode: 500,
@@ -110,16 +82,41 @@ exports.handler = (event, context) => {
               body: JSON.stringify(error),
             });
           } else {
-            resolve({
-              statusCode: 201,
-              headers: {
-                'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*',
-                'Access-Control-Allow-Headers': '*',
-                'Access-Control-Allow-Methods': 'OPTIONS,POST,GET',
-              },
-              body: JSON.stringify({ message: 'Record created', results }),
-            });
+              try {
+                  for (let item of restion) {
+                      await connection.query(
+                          'INSERT INTO questions (session_id, question) VALUES (?, ?)',
+                          [results.insertId, item.question], async (error, results) => {
+                            const verses_values = item.verses.map(item => [results.insertId, item.reference, item.text]); // Adjust columns as necessary
+                            const verses_sql = 'INSERT INTO verses (question_id, title, content) VALUES ?'
+                            await connection.query(verses_sql, [verses_values])
+                          }
+                      );
+                  }
+                  resolve({
+                    statusCode: 201,
+                    headers: {
+                      'Content-Type': 'application/json',
+                      'Access-Control-Allow-Origin': '*',
+                      'Access-Control-Allow-Headers': '*',
+                      'Access-Control-Allow-Methods': 'OPTIONS,POST,GET',
+                    },
+                    body: JSON.stringify({ message: 'Record created', restion }),
+                  });  
+              } catch (error) {
+                  console.error('Error inserting data: ', error);
+                  reject({
+                    statusCode: 500,
+                    headers: {
+                      'Content-Type': 'application/json',
+                      'Access-Control-Allow-Origin': '*',
+                      'Access-Control-Allow-Headers': '*',
+                      'Access-Control-Allow-Methods': 'OPTIONS,POST,GET',
+                    },
+                    body: JSON.stringify(error),
+                  });
+              }
+
           }
         }
       );

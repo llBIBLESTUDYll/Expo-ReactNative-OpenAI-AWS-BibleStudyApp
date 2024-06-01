@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
-import { styled, withExpoSnack } from 'nativewind';
 import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import { styles } from '../styles/ActiveStyle'
 import { useTheme } from '../../constants/ThemeProvider';
+import  {Auth, API}  from 'aws-amplify';
 
 const BibleStudySessionScreen = ( props ) => {
+  const sessionInfo = props.route.params.sessionInfo;
+  console.log('this is the sessionInfo from createSessionScreen', sessionInfo);
   const { theme, toggleTheme } = useTheme();
   const navigation = useNavigation();
   console.log('this is navigation ===============>', navigation);
@@ -20,6 +22,40 @@ const BibleStudySessionScreen = ( props ) => {
   })
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [expandedVerseIndex, setExpandedVerseIndex] = useState(null);
+
+  Auth.currentAuthenticatedUser().then( async user => {
+    const data = await API.post('secondTestForBible', '/session', {
+      body: {
+        user, restion, sessionInfo: sessionInfo
+      }
+    })
+    await API.post('secondTestForBible', '/session', {
+      body: {
+        "sessionInfo": {
+          "title": "confirm",
+          "groupType": "confirm",
+          "numberQuestions": "1",
+          "numberVerses": "1",
+          "focusTopic": "confirm",
+          "bible": "confirm"
+        },
+        "user": {
+          "username": "12345678901234567890"
+        },
+        "restion": [
+          {
+            "question": "This is question for confirm",
+            "verses": [
+              {
+                "reference": "This is reference for confirm",
+                "text": "This is text for confirm"
+              }
+            ]
+          }
+        ]
+      }
+    })    
+  })
 
   const handleVersePress = (index) => {
     if (expandedVerseIndex === index) {

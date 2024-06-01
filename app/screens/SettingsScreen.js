@@ -47,24 +47,52 @@ const SettingsScreen = ({ navigation }) => {
 
   const update = () => {
     setLoading(true);
-    Auth.currentAuthenticatedUser()
-        .then(user => {
-          console.log('this is logined user', user.attributes)
-          return Auth.updateUserAttributes(user, {
-            'name': username,
-            'email': email
-          });
-        })
-        .then(data => {console.log(data); setLoading(false); closeModal();})
-        .catch(err => console.log(err));
+    const user = Auth.currentAuthenticatedUser().then(async user => { return user});
+    console.log('this is logined user', user.attributes)
+
+    setLoading(false);
+
+    // Auth.currentAuthenticatedUser()
+    //     .then(user => {
+    //       console.log('this is logined user', user.attributes)
+    //       return Auth.updateUserAttributes(user, {
+    //         'name': username,
+    //         'email': email
+    //       });
+    //     })
+    //     .then(data => {console.log(data); setLoading(false); closeModal();})
+    //     .catch(err => console.log(err));
   }
 
   const testAPI = async () => {
     setLoading(true);
     try {
       // Make the API call
-      const data = await API.get('secondTestForBible', '/session', {
-        init: [{id: 1}]
+      const data = await API.post('secondTestForBible', '/session', {
+        body: {
+          "sessionInfo": {
+            "title": "confirm",
+            "groupType": "confirm",
+            "numberQuestions": "1",
+            "numberVerses": "1",
+            "focusTopic": "confirm",
+            "bible": "confirm"
+          },
+          "user": {
+            "username": "12345678901234567890"
+          },
+          "restion": [
+            {
+              "question": "This is question for confirm",
+              "verses": [
+                {
+                  "reference": "This is reference for confirm",
+                  "text": "This is text for confirm"
+                }
+              ]
+            }
+          ]
+        }
       })
       // const response = await axios.get(apiEndpoint);
       setLoading(false)
