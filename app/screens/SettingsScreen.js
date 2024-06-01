@@ -68,32 +68,8 @@ const SettingsScreen = ({ navigation }) => {
     setLoading(true);
     try {
       // Make the API call
-      const data = await API.post('secondTestForBible', '/session', {
-        body: {
-          "sessionInfo": {
-            "title": "confirm",
-            "groupType": "confirm",
-            "numberQuestions": "1",
-            "numberVerses": "1",
-            "focusTopic": "confirm",
-            "bible": "confirm"
-          },
-          "user": {
-            "username": "12345678901234567890"
-          },
-          "restion": [
-            {
-              "question": "This is question for confirm",
-              "verses": [
-                {
-                  "reference": "This is reference for confirm",
-                  "text": "This is text for confirm"
-                }
-              ]
-            }
-          ]
-        }
-      })
+      const username = '8498a478-c051-7039-fc9f-5e0797a4be9e'
+      const data = await API.get('secondTestForBible', `/session?username=${username}&page=4`)
       // const response = await axios.get(apiEndpoint);
       setLoading(false)
       console.log('Response data:', data);

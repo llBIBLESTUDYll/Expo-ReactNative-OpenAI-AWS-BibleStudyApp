@@ -35,9 +35,46 @@ exports.handler = async (event, context) => {
   console.log('Request Body:', body);
 
   return new Promise( async (resolve, reject) => {
+          // resolve({
+          //   statusCode: 200,
+          //   headers: {
+          //     'Content-Type': 'application/json',
+          //     'Access-Control-Allow-Origin': '*', // Allow from any origin
+          //     'Access-Control-Allow-Headers': '*', // Allow any headers
+          //     'Access-Control-Allow-Methods': 'OPTIONS,POST,GET', // Allow these methods
+          //   },
+          //   body: JSON.stringify(queryStringParameters),
+          // });    
     // Handle different HTTP methods    
     if (method === 'GET') {
-      connection.query('SELECT * FROM your_table', (error, results) => {
+      if(queryStringParameters.username) {
+        connection.query(`SELECT * FROM sessions WHERE username="${queryStringParameters.username}" LIMIT 10 OFFSET ${10 * (queryStringParameters.page - 1)}`, (error, results) => {
+          if (error) {
+            reject({
+              statusCode: 500,
+              headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*', // Allow from any origin
+                'Access-Control-Allow-Headers': '*', // Allow any headers
+                'Access-Control-Allow-Methods': 'OPTIONS,POST,GET', // Allow these methods
+              },
+              body: JSON.stringify(error),
+            });
+          } else {
+            resolve({
+              statusCode: 200,
+              headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*', // Allow from any origin
+                'Access-Control-Allow-Headers': '*', // Allow any headers
+                'Access-Control-Allow-Methods': 'OPTIONS,POST,GET', // Allow these methods
+              },
+              body: JSON.stringify(results),
+            });
+          }
+        });
+      }
+      connection.query('SELECT * FROM sessions', (error, results) => {
         if (error) {
           reject({
             statusCode: 500,
