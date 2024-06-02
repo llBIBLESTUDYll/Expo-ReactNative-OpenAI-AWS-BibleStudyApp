@@ -115,7 +115,6 @@ const styles = StyleSheet.create({
   link: {
     marginVertical: 10,
     paddingVertical: 4,
-//    borderBottomWidth: 0.5,
     width: 100
   },  
   errorMessage: {

@@ -51,17 +51,6 @@ const SettingsScreen = ({ navigation }) => {
     console.log('this is logined user', user.attributes)
 
     setLoading(false);
-
-    // Auth.currentAuthenticatedUser()
-    //     .then(user => {
-    //       console.log('this is logined user', user.attributes)
-    //       return Auth.updateUserAttributes(user, {
-    //         'name': username,
-    //         'email': email
-    //       });
-    //     })
-    //     .then(data => {console.log(data); setLoading(false); closeModal();})
-    //     .catch(err => console.log(err));
   }
 
   const testAPI = async () => {

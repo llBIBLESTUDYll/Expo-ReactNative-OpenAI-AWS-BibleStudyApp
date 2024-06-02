@@ -14,13 +14,9 @@ const BibleStudySessionScreen = ( props ) => {
   console.log('this is navigation ===============>', props.route.params.questions);
   const keys = Object.keys(props.route.params.questions);
 
-  // Step 2: Access the key by index
   const index = 0; // For example, to access the second property
   const key = keys[index];
   
-  // Step 3: Use the key to get the corresponding value from the object
-  
-
   const { BibleStudyQuestions, questions, Questions, biblestudyquestions } = props.route.params.questions
   console.log("this is props" ,props, BibleStudyQuestions, biblestudyquestions, Questions, questions);
   // let restion = BibleStudyQuestions ? BibleStudyQuestions : biblestudyquestions ? biblestudyquestions : Questions ? Questions : questions ? questions : null;

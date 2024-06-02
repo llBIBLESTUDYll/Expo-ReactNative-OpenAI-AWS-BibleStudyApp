@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import { 
   View, 
   TextInput, 
-  StyleSheet,
   TouchableOpacity,
   Text,
   ActivityIndicator,
@@ -19,8 +18,6 @@ const QuestionScreen = ({ navigation }) => {
   const { theme, toggleTheme } = useTheme();
 
   const handleSubmit = () => {
-    // Add code here to handle submission of the question
-    // You can navigate to the answer screen after submission
     navigation.navigate('Answer', { question });
   };
   

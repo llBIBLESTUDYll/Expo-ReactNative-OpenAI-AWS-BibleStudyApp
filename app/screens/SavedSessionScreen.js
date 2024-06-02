@@ -29,20 +29,6 @@ const CreateSessionScreen = () => {
     const [isLoading, setIsLoading] = useState(true);
     const nextPageIdentifierRef = useRef(1);
     const [isFirstPageReceived, setIsFirstPageReceived] = useState(false);
-
-    const [groupType, setGroupType] = useState("");
-    const [numberQuestions, setNumberQuestions] = useState("");
-    const [numberVerses, setNumberVerses] = useState("");
-    const [focusTopic, setFocusTopic] = useState("");
-    const [bible, setBible] = useState("");
-
-    // State to ensure component is mounted before setting state on async operations
-    const [isMounted, setIsMounted] = useState(true);
-
-    // States to manage API call status
-    const [apiResponse, setApiResponse] = useState("");
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
     const { theme, toggleTheme } = useTheme();
 
     // Effect hook to manage component mount state

@@ -2,14 +2,12 @@ import React, { useState, useEffect } from "react";
 import {
     View,
     Text,
-    StyleSheet,
     TouchableOpacity,
     TextInput,
     Alert,
     ActivityIndicator,
     Image
 } from "react-native";
-import { styled, withExpoSnack } from 'nativewind';
 import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import axios from "axios";
@@ -228,5 +226,4 @@ const CreateSessionScreen = () => {
         );
 };
 
-    // Styles for the CreateSessionScreen
-    export default withExpoSnack(CreateSessionScreen);
+export default CreateSessionScreen;

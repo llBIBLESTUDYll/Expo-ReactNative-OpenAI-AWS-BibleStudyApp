@@ -1,8 +1,3 @@
-import { DarkTheme, DefaultTheme } from '@react-navigation/native';
-import { useFonts } from 'expo-font';
-// import { Stack } from 'expo-router';
-// import * as SplashScreen from 'expo-splash-screen';
-import { useEffect } from 'react';
 import 'react-native-reanimated';
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
@@ -12,7 +7,7 @@ import { Ionicons } from '@expo/vector-icons';
 
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { ThemeProvider } from '../constants/ThemeProvider';
-// Import the screens
+
 import SplashScreen from './screens/SplashScreen';
 import LoginScreen from './screens/LoginScreen';
 import RegisterScreen from './screens/RegisterScreen';
@@ -22,11 +17,9 @@ import SessionStackScreen from './screens/SessionStackScreen';
 import QuestionScreen from './screens/QuestionScreen';
 import {Amplify} from 'aws-amplify';
 import aws_exports from './aws-exports';
-// Prevent the splash screen from auto-hiding before asset loading is complete.
-// SplashScreen.preventAutoHideAsync();
+
 Amplify.configure(aws_exports);
 
-// Create a Bottom Tab Navigator
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 const SplashStack = createStackNavigator(); 

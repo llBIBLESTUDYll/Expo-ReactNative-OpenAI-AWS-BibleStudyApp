@@ -2,52 +2,19 @@ import React, { useState, useEffect } from "react";
 import {
     View,
     Text,
-    StyleSheet,
     TouchableOpacity,
-    TextInput,
-    Alert,
-    ActivityIndicator,
     ScrollView,
     Image
 } from "react-native";
 import { styled, withExpoSnack } from 'nativewind';
 import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
-import axios from "axios";
 import { styles } from '../styles/SavedStyle';
-import { em } from '../config/layout';
-import Constants from 'expo-constants';
 import { useTheme } from '../../constants/ThemeProvider';
 // This screen provides functionality for users to create a new Bible study session
 const CreateSessionScreen = () => {
     const navigation = useNavigation();
-
-    // State hooks to manage form inputs and other variables
-    const [groupType, setGroupType] = useState("");
-    const [numberQuestions, setNumberQuestions] = useState("");
-    const [numberVerses, setNumberVerses] = useState("");
-    const [focusTopic, setFocusTopic] = useState("");
-    const [bible, setBible] = useState("");
-
-    // State to ensure component is mounted before setting state on async operations
-    const [isMounted, setIsMounted] = useState(true);
-
-    // States to manage API call status
-    const [apiResponse, setApiResponse] = useState("");
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
     const { theme, toggleTheme } = useTheme();
-
-    // Effect hook to manage component mount state
-    useEffect(() => {
-        // No operations to be carried out on mount
-        return () => {
-            // Component will unmount logic
-            setIsMounted(false);
-        };
-    }, []);
-
-    // Handles the form submission, creating a new session
 
     const goToBack = () => {
         navigation.goBack();
@@ -176,5 +143,4 @@ const CreateSessionScreen = () => {
         );
 };
 
-    // Styles for the CreateSessionScreen
-    export default withExpoSnack(CreateSessionScreen);
+export default withExpoSnack(CreateSessionScreen);
