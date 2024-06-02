@@ -103,11 +103,11 @@ const BibleStudySessionScreen = ( props ) => {
             onPress={() => handleVersePress(index)}
           >
             <Text className={styles.verseTitle}>
-              {verse[Object.keys(verse)[0]]}
+              {verse.reference ? verse.reference : verse[Object.keys(verse)[0]]}
             </Text>
             {expandedVerseIndex === index && (
               <Text className={styles.verseText}>
-                {verse[Object.keys(verse)[0]]}
+                {verse.text ? verse.text : verse[Object.keys(verse)[1]]}
               </Text>
             )}
           </TouchableOpacity>
