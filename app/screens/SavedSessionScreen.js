@@ -34,10 +34,6 @@ const CreateSessionScreen = () => {
     // Effect hook to manage component mount state
     useEffect(() => {
         fetchData()
-        return () => {
-            // Component will unmount logic
-            setIsMounted(false);
-        };
     }, []);
 
     const fetchData = () => {
@@ -51,6 +47,8 @@ const CreateSessionScreen = () => {
             console.log('this is the fetchdata', data, preData.length, nextPageIdentifierRef);
             await setSessions([...sessions, ...data]);
         })
+        console.log('after fetch data')
+
         setIsLoading(false);
         !isFirstPageReceived && setIsFirstPageReceived(true);
     };
@@ -65,6 +63,7 @@ const CreateSessionScreen = () => {
     };
 
     const getRestion = async (item) => {
+        setIsLoading(true)
         let restion = []
         let questions = await API.get('secondTestForBible', `/session/question?session_id=${item.id}`)
         questions = questions.map(async question => {
@@ -81,7 +80,7 @@ const CreateSessionScreen = () => {
         }
         console.log('this is the getRestion', restion)
 
-        navigation.navigate("ActiveSession", { questions: {BibleStudy: {questions: restion}}, from: 'mystudies' });
+        navigation.navigate("ActiveSession", { questions: {questions: restion}, from: 'mystudies' });
     }
 
     const renderItem = ({ item }) => {
