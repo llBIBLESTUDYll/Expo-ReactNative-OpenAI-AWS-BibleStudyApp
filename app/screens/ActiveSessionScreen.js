@@ -11,51 +11,67 @@ const BibleStudySessionScreen = ( props ) => {
   const from = props.route.params.from;
   const { theme, toggleTheme } = useTheme();
   const navigation = useNavigation();
-  console.log('this is navigation ===============>', navigation);
-  const { BibleStudyQuestions, questions, Questions, biblestudyquestions } = props.route.params.questions.BibleStudy ? props.route.params.questions.BibleStudy : props.route.params.questions;
+  console.log('this is navigation ===============>', props.route.params.questions);
+  const keys = Object.keys(props.route.params.questions);
+
+  // Step 2: Access the key by index
+  const index = 0; // For example, to access the second property
+  const key = keys[index];
+  
+  // Step 3: Use the key to get the corresponding value from the object
+  
+
+  const { BibleStudyQuestions, questions, Questions, biblestudyquestions } = props.route.params.questions
   console.log("this is props" ,props, BibleStudyQuestions, biblestudyquestions, Questions, questions);
-  let restion = BibleStudyQuestions ? BibleStudyQuestions : biblestudyquestions ? biblestudyquestions : Questions ? Questions : questions ? questions : null;
+  // let restion = BibleStudyQuestions ? BibleStudyQuestions : biblestudyquestions ? biblestudyquestions : Questions ? Questions : questions ? questions : null;
+  let restion = props.route.params.questions[key];
+  console.log('this is restion from key', restion)
   restion = restion.map(item => {
-    item.question = item.question ? item.question : item.title ? item.title : item.Question;
-    item.verses = item.Verses ? item.Verses : item.verses;
+    const keys = Object.keys(item);
+    const firstKey = keys[0];
+    const secondKey = keys[1];
+    item.question = item[firstKey];
+    item.verses = item[secondKey];
     return item; 
   })
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [expandedVerseIndex, setExpandedVerseIndex] = useState(null);
-  if(from != 'mystudies')
-    Auth.currentAuthenticatedUser().then( async user => {
-      const data = await API.post('secondTestForBible', '/session', {
-        body: {
-          user, restion, sessionInfo: sessionInfo
-        }
+  useEffect(() => {
+    if(from != 'mystudies')
+      Auth.currentAuthenticatedUser().then( async user => {
+        const data = await API.post('secondTestForBible', '/session', {
+          body: {
+            user, restion, sessionInfo: sessionInfo
+          }
+        })
+        await API.post('secondTestForBible', '/session', {
+          body: {
+            "sessionInfo": {
+              "title": "confirm",
+              "groupType": "confirm",
+              "numberQuestions": "1",
+              "numberVerses": "1",
+              "focusTopic": "confirm",
+              "bible": "confirm"
+            },
+            "user": {
+              "username": "12345678901234567890"
+            },
+            "restion": [
+              {
+                "question": "This is question for confirm",
+                "verses": [
+                  {
+                    "reference": "This is reference for confirm",
+                    "text": "This is text for confirm"
+                  }
+                ]
+              }
+            ]
+          }
+        })    
       })
-      await API.post('secondTestForBible', '/session', {
-        body: {
-          "sessionInfo": {
-            "title": "confirm",
-            "groupType": "confirm",
-            "numberQuestions": "1",
-            "numberVerses": "1",
-            "focusTopic": "confirm",
-            "bible": "confirm"
-          },
-          "user": {
-            "username": "12345678901234567890"
-          },
-          "restion": [
-            {
-              "question": "This is question for confirm",
-              "verses": [
-                {
-                  "reference": "This is reference for confirm",
-                  "text": "This is text for confirm"
-                }
-              ]
-            }
-          ]
-        }
-      })    
-    })
+  }, [])
 
   const handleVersePress = (index) => {
     if (expandedVerseIndex === index) {
@@ -91,11 +107,11 @@ const BibleStudySessionScreen = ( props ) => {
             onPress={() => handleVersePress(index)}
           >
             <Text className={styles.verseTitle}>
-              {verse.reference}
+              {verse[Object.keys(verse)[0]]}
             </Text>
             {expandedVerseIndex === index && (
               <Text className={styles.verseText}>
-                {verse.text}
+                {verse[Object.keys(verse)[0]]}
               </Text>
             )}
           </TouchableOpacity>

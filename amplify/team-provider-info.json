@@ -23,7 +23,7 @@
         },
         "session": {
           "deploymentBucketName": "amplify-bible-dev-1f31a-deployment",
-          "s3Key": "amplify-builds/session-7257447a52763470686b-build.zip"
+          "s3Key": "amplify-builds/session-767178454a55666a6362-build.zip"
         }
       },
       "api": {

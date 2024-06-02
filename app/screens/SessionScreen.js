@@ -1,16 +1,28 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, FlatList, Image } from 'react-native';
 import { styled, withExpoSnack } from 'nativewind';
 import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import { styles } from '../styles/SessionStyle'
 import { useTheme } from '../../constants/ThemeProvider';
+import  {Auth}  from 'aws-amplify';
 
 const StyledText = styled(Text);
 
-const user = "Rueben";
+
+
 
 const SessionScreen = () => {
+
+  const [username, setUsername] = useState('Ruben');
+
+  useEffect(() => {
+    Auth.currentAuthenticatedUser().then( async user => {
+      console.log(user.attributes.name)
+      await setUsername(user.attributes.name)
+    })
+  }, [])
+
   const { theme, toggleTheme } = useTheme();
   const navigation = useNavigation();
   return (
@@ -21,7 +33,7 @@ const SessionScreen = () => {
       </View>
       <View>
         <Text className={styles.welcomeText} style={{color: theme.poster}}>Welcome back,</Text>
-        <Text className={styles.welcomeText} style={{color: theme.poster}}>{user}!</Text>
+        <Text className={styles.welcomeText} style={{color: theme.poster}}>{username}!</Text>
       </View>
       <View className={styles.homeLabel.background}>
         <Text className={styles.homeLabel.title}>Weekly Verse</Text>
