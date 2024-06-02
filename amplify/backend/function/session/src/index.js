@@ -43,7 +43,7 @@ exports.handler = async (event, context) => {
           //     'Access-Control-Allow-Headers': '*', // Allow any headers
           //     'Access-Control-Allow-Methods': 'OPTIONS,POST,GET', // Allow these methods
           //   },
-          //   body: JSON.stringify(queryStringParameters),
+          //   body: JSON.stringify(path),
           // });    
     // Handle different HTTP methods    
     if (method === 'GET') {
@@ -74,6 +74,61 @@ exports.handler = async (event, context) => {
           }
         });
       }
+      
+      if(queryStringParameters.session_id && path == '/session/question') {
+        connection.query(`SELECT * FROM questions WHERE session_id=${queryStringParameters.session_id}`, (error, results) => {
+          if (error) {
+            reject({
+              statusCode: 500,
+              headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*', // Allow from any origin
+                'Access-Control-Allow-Headers': '*', // Allow any headers
+                'Access-Control-Allow-Methods': 'OPTIONS,POST,GET', // Allow these methods
+              },
+              body: JSON.stringify(error),
+            });
+          } else {
+            resolve({
+              statusCode: 200,
+              headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*', // Allow from any origin
+                'Access-Control-Allow-Headers': '*', // Allow any headers
+                'Access-Control-Allow-Methods': 'OPTIONS,POST,GET', // Allow these methods
+              },
+              body: JSON.stringify(results),
+            });
+          }
+        });
+      }     
+      if(queryStringParameters.question_id && path == '/session/verses') {
+        connection.query(`SELECT * FROM verses WHERE question_id=${queryStringParameters.question_id}`, (error, results) => {
+          if (error) {
+            reject({
+              statusCode: 500,
+              headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*', // Allow from any origin
+                'Access-Control-Allow-Headers': '*', // Allow any headers
+                'Access-Control-Allow-Methods': 'OPTIONS,POST,GET', // Allow these methods
+              },
+              body: JSON.stringify(error),
+            });
+          } else {
+            resolve({
+              statusCode: 200,
+              headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*', // Allow from any origin
+                'Access-Control-Allow-Headers': '*', // Allow any headers
+                'Access-Control-Allow-Methods': 'OPTIONS,POST,GET', // Allow these methods
+              },
+              body: JSON.stringify(results),
+            });
+          }
+        });
+      }     
       connection.query('SELECT * FROM sessions', (error, results) => {
         if (error) {
           reject({
@@ -125,7 +180,7 @@ exports.handler = async (event, context) => {
                           'INSERT INTO questions (session_id, question) VALUES (?, ?)',
                           [results.insertId, item.question], async (error, results) => {
                             const verses_values = item.verses.map(item => [results.insertId, item.reference, item.text]); // Adjust columns as necessary
-                            const verses_sql = 'INSERT INTO verses (question_id, title, content) VALUES ?'
+                            const verses_sql = 'INSERT INTO verses (question_id, reference, text) VALUES ?'
                             await connection.query(verses_sql, [verses_values])
                           }
                       );

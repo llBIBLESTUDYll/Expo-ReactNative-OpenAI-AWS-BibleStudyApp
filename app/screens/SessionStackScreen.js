@@ -8,6 +8,7 @@ import CreateSessionScreen from './CreateSessionScreen';
 import SavedSessionScreen from './SavedSessionScreen';
 import CommunitySessionScreen from './CommunitySessionScreen';
 import SessionDetailsScreen from './SessionDetailsScreen';
+// import flatlistscreen from './flatlist';
 
 // Create a Stack Navigator for Sessions
 const SessionStack = createStackNavigator();
@@ -20,6 +21,7 @@ const SessionStackScreen = () => {
       <SessionStack.Screen name="CreateSession" component={CreateSessionScreen} options={{ headerShown: false }} />
       <SessionStack.Screen name="SavedSession" component={SavedSessionScreen} options={{ headerShown: false }} />
       <SessionStack.Screen name="CommunitySession" component={CommunitySessionScreen} options={{ headerShown: false }} />
+      {/* <SessionStack.Screen name="flatlistscreen" component={flatlistscreen} options={{ headerShown: false }} /> */}
       <SessionStack.Screen name="SessionDetails" component={SessionDetailsScreen} />
     </SessionStack.Navigator>
   );

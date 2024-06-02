@@ -78,8 +78,28 @@ const CreateSessionScreen = () => {
         fetchData();
     };
 
+    const getRestion = async (item) => {
+        let restion = []
+        let questions = await API.get('secondTestForBible', `/session/question?session_id=${item.id}`)
+        questions = questions.map(async question => {
+            question['verses'] = API.get('secondTestForBible', `/session/verses?question_id=${question.id}`)
+            return question
+        })
+        console.log('this is the getRestion', questions)
+        let i = 0;
+        for (const promise of questions) {
+            const questionData = await promise;
+            restion[i] = {}
+            restion[i]['question'] = questionData.question;
+            restion[i++]['verses'] = await questionData.verses;
+        }
+        console.log('this is the getRestion', restion)
+
+        navigation.navigate("ActiveSession", { questions: {BibleStudy: {questions: restion}}, from: 'mystudies' });
+    }
+
     const renderItem = ({ item }) => {
-        return  <TouchableOpacity className={styles.questionBox}>
+        return  <TouchableOpacity className={styles.questionBox} onPress={() => getRestion(item)}>
                     <View style={{width: '100%', justifyContent: 'center', borderBlockColor: '#fff', borderBottomWidth: 0.1, paddingBottom: 10, marginBottom: 10}}>
                         <Text className={styles.questionTitle}>
                             {item.title}
@@ -120,7 +140,7 @@ const CreateSessionScreen = () => {
                 <Image className={styles.avatar} source={require('../../design/avatar.png')}></Image>
             </View>
             <Text className={styles.postar} style={{color: theme.poster}}>Let's Study!</Text>
-            {(isFirstPageReceived && isLoading) ?
+            {(!isFirstPageReceived) ?
                 <View style={{marginTop: 100}}>
                     <ActivityIndicator animating = {true} size="small" color={theme.loading} />
                 </View>

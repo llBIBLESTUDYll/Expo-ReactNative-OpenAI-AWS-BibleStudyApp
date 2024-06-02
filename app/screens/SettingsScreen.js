@@ -69,7 +69,7 @@ const SettingsScreen = ({ navigation }) => {
     try {
       // Make the API call
       const username = '8498a478-c051-7039-fc9f-5e0797a4be9e'
-      const data = await API.get('secondTestForBible', `/session?username=${username}&page=4`)
+      const data = await API.get('secondTestForBible', `/session/question?username=${username}&page=4`)
       // const response = await axios.get(apiEndpoint);
       setLoading(false)
       console.log('Response data:', data);
