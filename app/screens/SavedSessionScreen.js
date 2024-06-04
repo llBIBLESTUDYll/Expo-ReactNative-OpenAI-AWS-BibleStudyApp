@@ -26,6 +26,7 @@ const CreateSessionScreen = () => {
 
     // State hooks to manage form inputs and other variables
     const [sessions, setSessions] = useState([]);
+    const [isDetailLoading, setIsDetailLoading] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
     const nextPageIdentifierRef = useRef(1);
     const [isFirstPageReceived, setIsFirstPageReceived] = useState(false);
@@ -37,24 +38,25 @@ const CreateSessionScreen = () => {
     }, []);
 
     const fetchData = () => {
-        console.log('fetchdata')
         setIsLoading(true);
-
         Auth.currentAuthenticatedUser().then( async user => {
             const data = await API.get('secondTestForBible', `/session?username=${user.username}&page=${nextPageIdentifierRef.current}`)
+            const res = await data.map(item => {item['key'] = item.id; return item});
             const preData = await API.get('secondTestForBible', `/session?username=${user.username}&page=${nextPageIdentifierRef.current + 1}`)
             preData.length ? nextPageIdentifierRef.current = nextPageIdentifierRef.current + 1 : nextPageIdentifierRef.current = null;
-            console.log('this is the fetchdata', data, preData.length, nextPageIdentifierRef);
-            await setSessions([...sessions, ...data]);
-        })
-        console.log('after fetch data')
+            console.log('this is the fetchdata', res, preData.length, nextPageIdentifierRef);
+            await setSessions([...sessions, ...res]);
+        // console.log('this is sessions', sessions)
+        // await setSessions([sessions.map(session => {session['key'] = (session.id + session.title); return session})]);
+        // console.log('this is sessions', sessions)
 
-        setIsLoading(false);
-        !isFirstPageReceived && setIsFirstPageReceived(true);
+            setIsLoading(false);
+            !isFirstPageReceived && setIsFirstPageReceived(true);
+        })
     };
     
     const fetchNextPage = () => {
-        console.log('this is fetchNextPage', nextPageIdentifierRef)
+        console.log('this is fetchNextPage', isFirstPageReceived)
         if (nextPageIdentifierRef.current == null) {
           // End of data.
           return;
@@ -63,7 +65,8 @@ const CreateSessionScreen = () => {
     };
 
     const getRestion = async (item) => {
-        setIsLoading(true)
+        setIsLoading(true);
+        setIsDetailLoading(true)
         let restion = []
         let questions = await API.get('secondTestForBible', `/session/question?session_id=${item.id}`)
         questions = questions.map(async question => {
@@ -79,6 +82,8 @@ const CreateSessionScreen = () => {
             restion[i++]['verses'] = await questionData.verses;
         }
         console.log('this is the getRestion', restion)
+        setIsDetailLoading(false)
+        setIsLoading(false);
 
         navigation.navigate("ActiveSession", { questions: {questions: restion}, from: 'mystudies' });
     }
@@ -109,9 +114,9 @@ const CreateSessionScreen = () => {
       };
     
     const ListEndLoader = () => {
-        if (!isFirstPageReceived && isLoading) {
-            return <ActivityIndicator animating = {true} size="small" color={theme.loading} />;
-        }
+        // if (isFirstPageReceived && isLoading) {
+        //     return <ActivityIndicator animating = {true} size="small" color={theme.loading} />;
+        // }
     };
 
     const goToBack = () => {
@@ -125,7 +130,7 @@ const CreateSessionScreen = () => {
                 <Image className={styles.avatar} source={require('../../design/avatar.png')}></Image>
             </View>
             <Text className={styles.postar} style={{color: theme.poster}}>Let's Study!</Text>
-            {(!isFirstPageReceived) ?
+            {((!isFirstPageReceived || isDetailLoading) && isLoading) ?
                 <View style={{marginTop: 100}}>
                     <ActivityIndicator animating = {true} size="small" color={theme.loading} />
                 </View>
@@ -134,8 +139,9 @@ const CreateSessionScreen = () => {
                     data={sessions}
                     renderItem={renderItem}
                     onEndReached={fetchNextPage}
-                    onEndReachedThreshold={0.8}
+                    onEndReachedThreshold={1}
                     ListFooterComponent={ListEndLoader}
+                    showsVerticalScrollIndicator={false}
                 />
             }
         </View>

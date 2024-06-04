@@ -48,7 +48,7 @@ exports.handler = async (event, context) => {
     // Handle different HTTP methods    
     if (method === 'GET') {
       if(queryStringParameters.username) {
-        connection.query(`SELECT * FROM sessions WHERE username="${queryStringParameters.username}" LIMIT 10 OFFSET ${10 * (queryStringParameters.page - 1)}`, (error, results) => {
+        connection.query(`SELECT * FROM sessions WHERE username="${queryStringParameters.username}" ORDER BY id DESC LIMIT 5 OFFSET ${5 * (queryStringParameters.page - 1)}`, (error, results) => {
           if (error) {
             reject({
               statusCode: 500,
@@ -179,9 +179,9 @@ exports.handler = async (event, context) => {
                       await connection.query(
                           'INSERT INTO questions (session_id, question) VALUES (?, ?)',
                           [results.insertId, item.question], async (error, results) => {
-                            const verses_values = item.verses.map(item => [results.insertId, item.reference, item.text]); // Adjust columns as necessary
-                            const verses_sql = 'INSERT INTO verses (question_id, reference, text) VALUES ?'
-                            await connection.query(verses_sql, [verses_values])
+                            const verses_values = item.verses.map(verse => [results.insertId, verse[Object.keys(verse)[0]], verse[Object.keys(verse)[1]]]); // Adjust columns as necessary
+                            const verses_sql = 'INSERT INTO verses (question_id, reference, text) VALUES ?';
+                            await connection.query(verses_sql, [verses_values]);
                           }
                       );
                   }

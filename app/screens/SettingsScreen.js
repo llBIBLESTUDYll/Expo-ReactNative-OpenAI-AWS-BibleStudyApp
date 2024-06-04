@@ -35,19 +35,10 @@ const SettingsScreen = ({ navigation }) => {
     setIsAbout(false);
     setIsProfile(false);
   };
-  // Event listener for tapping outside of modal
-  const handleTapOutside = () => {
-    closeModal();
-  };
 
-  // Event listener for pressing the escape key
-  const handleEscapePress = () => {
-    closeModal();
-  };
-
-  const update = () => {
+  const update = async () => {
     setLoading(true);
-    const user = Auth.currentAuthenticatedUser().then(async user => { return user});
+    const user = await Auth.currentAuthenticatedUser().then(async user => { return user});
     console.log('this is logined user', user.attributes)
 
     setLoading(false);
@@ -78,22 +69,6 @@ const SettingsScreen = ({ navigation }) => {
         .catch(err => console.log(err));
   }, [])
 
-  useEffect(() => {
-    if (isAbout) {
-      // Listen for tapping outside of modal
-      const outsideListener = Keyboard.addListener('keyboardDidHide', handleTapOutside);
-      
-      // Listen for pressing the escape key
-      const escapeListener = BackHandler.addEventListener('hardwareBackPress', handleEscapePress);
-
-      return () => {
-        // Clean up event listeners when modal is closed
-        outsideListener.remove();
-        escapeListener.remove();
-      };
-    }
-  }, [isAbout]);
-
   return (
     <View className={styles.container} style={{height: '100%', backgroundColor: theme.backgroundColor}}>
       <View className={styles.header}>
@@ -121,52 +96,88 @@ const SettingsScreen = ({ navigation }) => {
       <TouchableOpacity className={styles.button} onPress={handleLogout}>
         <Text className={styles.buttonText} style={{color: theme.button.text}}>Log Out</Text>
       </TouchableOpacity>
+      {isAbout && (
+        <TouchableOpacity style={extra_styles.overlay}>
+          <Modal
+            animationType={"slide"}
+            transparent={true}
+            visible={isAbout}
+            onRequestClose={closeModal}>
+            <TouchableOpacity
+              style={{ flex: 1, position: 'absolute', width: '100%', height: '100%' }}
+              activeOpacity={1}
+              onPress={closeModal}
+            ></TouchableOpacity>
+              <View style={ styles.modal}>
+                {/* <TouchableOpacity className={styles.button} onPress={testAPI}>
+                { loading ? <ActivityIndicator animating = {true} size="small" color={theme.loading} /> : <Text className={styles.buttonText}>Test</Text> }
+                </TouchableOpacity> */}
+                <Text className={styles.about}>Welcome To BibleStudy</Text>
 
-      <Modal
-        animationType={"slide"}
-        transparent={true}
-        visible={isAbout}
-        onRequestClose={closeModal}>
-          <View style={styles.modal}>
-            <TouchableOpacity className={styles.button} onPress={testAPI}>
-            { loading ? <ActivityIndicator animating = {true} size="small" color={theme.loading} /> : <Text className={styles.buttonText}>Test</Text> }
-            </TouchableOpacity>
-          </View>
-      </Modal>
-      <Modal
-        animationType={"slide"}
-        transparent={true}
-        visible={isProfile}
-        onRequestClose={closeModal}>
-          <View style={styles.modal}>
-            <Text className={styles.postar}>Change Your Profile</Text>
-            <View className={styles.inputGroup}>
-                <Text className={styles.inputLabel}>username</Text>
-                <TextInput
-                    className={styles.input}
-                    onChangeText={setUsername}
-                    value={username}
-                    // placeholder="Enter Group Type (eg. Family)"
-                    placeholderTextColor="grey"
-                />
-            </View>
-            <View className={styles.inputGroup}>
-                <Text className={styles.inputLabel}>email</Text>
-                <TextInput
-                    className={styles.input}
-                    onChangeText={setEmail}
-                    value={email}
-                    // placeholder="Enter Group Type (eg. Family)"
-                    placeholderTextColor="grey"
-                />
-            </View>
-            <TouchableOpacity className={styles.button} onPress={update}>
-            { loading ? <ActivityIndicator animating = {true} size="small" color={theme.loading} /> : <Text className={styles.buttonText}>Change</Text> }
-            </TouchableOpacity>
-          </View>
-      </Modal>
+                <TouchableOpacity className={styles.button} onPress={closeModal}>
+                    <Text className={styles.buttonText}>O K</Text>
+                </TouchableOpacity>
+                {/* <Text>This is a christian study app.</Text> */}
+              </View>
+          </Modal>
+        </TouchableOpacity>
+      )}
+
+      {isProfile && (
+        <TouchableOpacity style={extra_styles.overlay}>
+          <Modal
+            animationType={"slide"}
+            transparent={true}
+            visible={isProfile}
+            onRequestClose={closeModal}>
+              <TouchableOpacity
+                style={{ flex: 1, position: 'absolute', width: '100%', height: '100%' }}
+                activeOpacity={1}
+                onPress={closeModal}
+              ></TouchableOpacity>
+              <View style={styles.modal}>
+                <Text className={styles.postar}>Change Your Profile</Text>
+                <View className={styles.inputGroup}>
+                    <Text className={styles.inputLabel}>username</Text>
+                    <TextInput
+                        className={styles.input}
+                        onChangeText={setUsername}
+                        value={username}
+                        // placeholder="Enter Group Type (eg. Family)"
+                        placeholderTextColor="grey"
+                    />
+                </View>
+                <View className={styles.inputGroup}>
+                    <Text className={styles.inputLabel}>email</Text>
+                    <TextInput
+                        className={styles.input}
+                        onChangeText={setEmail}
+                        value={email}
+                        // placeholder="Enter Group Type (eg. Family)"
+                        placeholderTextColor="grey"
+                    />
+                </View>
+                <View className={styles.buttonGroup}>
+                  <TouchableOpacity className={styles.button} onPress={update}>
+                  { loading ? <ActivityIndicator animating = {true} size="small" color={theme.loading} /> : <Text className={styles.aboutButtonText}>Change</Text> }
+                  </TouchableOpacity>
+                  <TouchableOpacity className={styles.button} onPress={closeModal}>
+                    <Text className={styles.aboutButtonText}>Cancel</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+          </Modal>
+        </TouchableOpacity>
+      )}
     </View>
   );
 };
+
+const extra_styles = StyleSheet.create({
+  overlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+})
 
 export default SettingsScreen;

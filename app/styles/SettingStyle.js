@@ -12,6 +12,9 @@ export const styles = {
     errorMessage: 'text-xl text-red my-2 text-center',
     settingContainer: 'flex flex-row justify-between items-center bg-gray-300 p-3 my-3 rounded-xl',
     settingDescription: 'text-lg',
+    buttonGroup: 'flex flex-row justify-between w-100',
+    about: 'text-2xl my-5',
+    aboutButtonText: 'text-md text-center',
     modal: {
         padding: 40,
         paddingTop: 20,

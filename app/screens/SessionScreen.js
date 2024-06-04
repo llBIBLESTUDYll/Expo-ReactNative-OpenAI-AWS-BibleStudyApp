@@ -9,7 +9,7 @@ import  {Auth}  from 'aws-amplify';
 
 const StyledText = styled(Text);
 
-
+const hostname = 'Ruben';
 
 
 const SessionScreen = () => {
@@ -33,7 +33,7 @@ const SessionScreen = () => {
       </View>
       <View>
         <Text className={styles.welcomeText} style={{color: theme.poster}}>Welcome back,</Text>
-        <Text className={styles.welcomeText} style={{color: theme.poster}}>{username}!</Text>
+        <Text className={styles.welcomeText} style={{color: theme.poster}}>{hostname}!</Text>
       </View>
       <View className={styles.homeLabel.background}>
         <Text className={styles.homeLabel.title}>Weekly Verse</Text>
