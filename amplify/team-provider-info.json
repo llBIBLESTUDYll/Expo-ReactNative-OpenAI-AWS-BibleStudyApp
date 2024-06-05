@@ -1,33 +1,19 @@
 {
   "dev": {
     "awscloudformation": {
-      "AuthRoleName": "amplify-bible-dev-1f31a-authRole",
-      "UnauthRoleArn": "arn:aws:iam::905418249201:role/amplify-bible-dev-1f31a-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::905418249201:role/amplify-bible-dev-1f31a-authRole",
-      "Region": "us-east-1",
-      "DeploymentBucketName": "amplify-bible-dev-1f31a-deployment",
-      "UnauthRoleName": "amplify-bible-dev-1f31a-unauthRole",
-      "StackName": "amplify-bible-dev-1f31a",
-      "StackId": "arn:aws:cloudformation:us-east-1:905418249201:stack/amplify-bible-dev-1f31a/f66eecf0-1e26-11ef-b4b6-12609d38ab9d",
-      "AmplifyAppId": "dyza66bm6bt8s",
-      "APIGatewayAuthURL": "https://s3.amazonaws.com/amplify-bible-dev-1f31a-deployment/amplify-cfn-templates/api/APIGatewayAuthStack.json"
+      "AuthRoleName": "amplify-bible-dev-d0963-authRole",
+      "UnauthRoleArn": "arn:aws:iam::537379106756:role/amplify-bible-dev-d0963-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::537379106756:role/amplify-bible-dev-d0963-authRole",
+      "Region": "us-east-2",
+      "DeploymentBucketName": "amplify-bible-dev-d0963-deployment",
+      "UnauthRoleName": "amplify-bible-dev-d0963-unauthRole",
+      "StackName": "amplify-bible-dev-d0963",
+      "StackId": "arn:aws:cloudformation:us-east-2:537379106756:stack/amplify-bible-dev-d0963/8b942810-2316-11ef-a667-06a5fcc035f1",
+      "AmplifyAppId": "d2tpl0orcw9sl6"
     },
     "categories": {
       "auth": {
-        "biblef7dad22a": {}
-      },
-      "function": {
-        "secondTestLambda": {
-          "deploymentBucketName": "amplify-bible-dev-1f31a-deployment",
-          "s3Key": "amplify-builds/secondTestLambda-3963436d512b586e4a2b-build.zip"
-        },
-        "session": {
-          "deploymentBucketName": "amplify-bible-dev-1f31a-deployment",
-          "s3Key": "amplify-builds/session-767178454a55666a6362-build.zip"
-        }
-      },
-      "api": {
-        "secondTestForBible": {}
+        "bibleaa6b94bf": {}
       }
     }
   }

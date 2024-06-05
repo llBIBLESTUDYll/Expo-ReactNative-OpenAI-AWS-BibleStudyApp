@@ -7,8 +7,8 @@
     "config": {
       "SourceDir": "app",
       "DistributionDir": "/",
-      "BuildCommand": "eas build --platform ios --profile ios-simulator",
-      "StartCommand": "npm start"
+      "BuildCommand": "npm.cmd run-script build",
+      "StartCommand": "npm.cmd run-script start"
     }
   },
   "providers": [
