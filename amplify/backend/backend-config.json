@@ -1,4 +1,20 @@
 {
+  "api": {
+    "session": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "session"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
+    }
+  },
   "auth": {
     "bibleaa6b94bf": {
       "customAuth": false,
@@ -25,6 +41,31 @@
       },
       "providerPlugin": "awscloudformation",
       "service": "Cognito"
+    }
+  },
+  "function": {
+    "session": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    }
+  },
+  "parameters": {
+    "AMPLIFY_function_session_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "session"
+        }
+      ]
+    },
+    "AMPLIFY_function_session_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "session"
+        }
+      ]
     }
   }
 }

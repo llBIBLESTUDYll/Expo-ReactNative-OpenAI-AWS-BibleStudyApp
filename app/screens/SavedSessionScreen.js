@@ -40,9 +40,9 @@ const CreateSessionScreen = () => {
     const fetchData = () => {
         setIsLoading(true);
         Auth.currentAuthenticatedUser().then( async user => {
-            const data = await API.get('secondTestForBible', `/session?username=${user.username}&page=${nextPageIdentifierRef.current}`)
+            const data = await API.get('session', `/session?username=${user.username}&page=${nextPageIdentifierRef.current}`)
             const res = await data.map(item => {item['key'] = item.id; return item});
-            const preData = await API.get('secondTestForBible', `/session?username=${user.username}&page=${nextPageIdentifierRef.current + 1}`)
+            const preData = await API.get('session', `/session?username=${user.username}&page=${nextPageIdentifierRef.current + 1}`)
             preData.length ? nextPageIdentifierRef.current = nextPageIdentifierRef.current + 1 : nextPageIdentifierRef.current = null;
             console.log('this is the fetchdata', res, preData.length, nextPageIdentifierRef);
             await setSessions([...sessions, ...res]);
@@ -68,9 +68,9 @@ const CreateSessionScreen = () => {
         setIsLoading(true);
         setIsDetailLoading(true)
         let restion = []
-        let questions = await API.get('secondTestForBible', `/session/question?session_id=${item.id}`)
+        let questions = await API.get('session', `/session/question?session_id=${item.id}`)
         questions = questions.map(async question => {
-            question['verses'] = API.get('secondTestForBible', `/session/verses?question_id=${question.id}`)
+            question['verses'] = API.get('session', `/session/verses?question_id=${question.id}`)
             return question
         })
         console.log('this is the getRestion', questions)

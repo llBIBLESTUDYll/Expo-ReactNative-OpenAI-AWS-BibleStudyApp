@@ -35,12 +35,12 @@ const BibleStudySessionScreen = ( props ) => {
   useEffect(() => {
     if(from != 'mystudies')
       Auth.currentAuthenticatedUser().then( async user => {
-        const data = await API.post('secondTestForBible', '/session', {
+        const data = await API.post('session', '/session', {
           body: {
             user, restion, sessionInfo: sessionInfo
           }
         })
-        await API.post('secondTestForBible', '/session', {
+        await API.post('session', '/session', {
           body: {
             "sessionInfo": {
               "title": "confirm",
