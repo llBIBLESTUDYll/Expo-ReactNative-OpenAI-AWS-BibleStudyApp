@@ -48,3 +48,76 @@ Join our community of developers creating universal apps.
 
 - [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
 - [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+
+
+
+
+
+
+# Project Setup and Build Instructions
+
+## Prerequisites
+
+Ensure you have the following installed:
+
+- Node.js v22.1.0
+- npm (Node Package Manager)
+
+## Node.js Installation
+
+To install Node.js v22.1.0, you can use `nvm` (Node Version Manager):
+
+nvm install 22.1.0
+nvm use 22.1.0
+
+## Global Package Installation
+
+Install the necessary global packages:
+
+- npm install -g expo-cli
+- npm install -g eas-cli
+
+## Project Setup
+Navigate to the source code directory and install dependencies:
+
+- cd path/to/your/project
+- npm install
+
+## Running the Project
+To run the project for web:
+
+- npm run web
+
+## Building the Project
+
+### Login to Expo
+Login to your Expo account:
+- expo logout
+- expo login
+
+### iOS Build
+
+To build for iOS simulator:
+- eas build --platform ios --profile ios-simulator
+
+### Android Build
+To build for Android development:
+
+- eas build --platform android --profile development
+
+## Deployment
+If the build runs successfully, the project will be available on the Expo Dev site.
+
+### Running on Device
+1. After a successful build, a QR code will appear in the terminal.
+2. Scan the QR code with your phone's camera.
+3. The app will install on your phone.
+
+## Notes
+Ensure that your project's root path is correct before running the build commands.
+Make sure to have an active internet connection during the build and installation process.
+
+## Useful Links
+- [Expo Dev](https://expo.dev/): View our project.
+- [Expo CLI Documentation](https://docs.expo.dev/)
+- [EAS BUILD Documentation](https://docs.expo.dev/build/introduction/)
