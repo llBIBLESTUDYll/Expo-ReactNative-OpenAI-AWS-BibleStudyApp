@@ -14,6 +14,9 @@ import axios from "axios";
 import { styles } from '../styles/CreateStyle'
 import Constants from 'expo-constants';
 import { useTheme } from '../../constants/ThemeProvider';
+
+const OpenAPIKey = process.env.OpenAPIKey;
+
 // This screen provides functionality for users to create a new Bible study session
 const CreateSessionScreen = () => {
     const navigation = useNavigation();
@@ -84,7 +87,7 @@ const CreateSessionScreen = () => {
                         'Access-Control-Allow-Credentials': true,
                         'Access-Control-Allow-Origin': '*',
                         'X-Requested-With': '*',
-                        Authorization: `Bearer sk-proj-vEC7LFZKrZmlyJwOUwMeT3BlbkFJXI6I5oxlbNddcqP46ayg`,
+                        Authorization: `Bearer ${OpenAPIKey}`,
                     },
                 }
             );
